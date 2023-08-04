@@ -6,7 +6,7 @@ import {Page, LegacyCard, Button, Frame, TextField,
   useIndexResourceState,
   Text,
   ChoiceList,
-  RangeSlider,
+  Pagination,
   Badge,} from '@shopify/polaris';
 import NavigationMenu from "./navigation";
 import app from "../fire-config";
@@ -257,6 +257,16 @@ useEffect(() => {
         {rowMarkup}
       </IndexTable>
     </LegacyCard>
+    <Pagination
+      hasPrevious
+      onPrevious={() => {
+        console.log('Previous');
+      }}
+      hasNext
+      onNext={() => {
+        console.log('Next');
+      }}
+    />
     </Page>
     </Frame>
     );
