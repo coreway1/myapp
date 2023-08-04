@@ -15,6 +15,7 @@ import { doc, setDoc, getFirestore, addDoc, collection, getDoc, deleteDoc, updat
 
 
 function Notifications(){
+  const [load, setload] = useState(false);
   const db = getFirestore(app);
 
   const getdocc = async () => {
@@ -222,7 +223,7 @@ useEffect(() => {
         cancelAction={{
           onAction: onHandleCancel,
           disabled: false,
-          loading: false,
+          loading: load,
         }}
         tabs={tabs}
         selected={selected}
@@ -233,7 +234,7 @@ useEffect(() => {
         onClearAll={handleFiltersClearAll}
         mode={mode}
         setMode={setMode}
-        loading
+        loading={load}
       />
       <IndexTable
         resourceName={resourceName}
