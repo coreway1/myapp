@@ -1,37 +1,38 @@
-import React from 'react';
-import { BrowserRouter as Router,Routes, Route } from 'react-router-dom';
-import Home from './component/home';
-import Notifications from './component/notifications';
-import WebpushNotifications from './component/webpush-notifications';
-import Templates from './component/templates';
-import WebpushTemplate from './component/webpush-template';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import Contact from './component/contact';
-
+import Dashboard from './pages/Dashboard';
+import Notifications from './pages/Notifications';
+import Notificationsview from "./pages/Notificationsview";
+import WebpushNotifications from './pages/WebpushNotifications';
+import Templates from './pages/Templates';
+import WebpushTemplate from './pages/WebpushTemplate';
+import Settings from './pages/Settings';
+import Plans from './pages/Plans';
 import '@shopify/polaris/build/esm/styles.css';
-
-import enTranslations from '@shopify/polaris/locales/en.json';
-import {AppProvider} from '@shopify/polaris';
-
 import './App.css';
-
+ 
 function App() {
+  
+
+
   return (
-    <AppProvider i18n={enTranslations}>
-    <Router>
 
-        <Routes>
-                <Route exact path='/' element={< Home />}></Route>
+         <BrowserRouter>
+      <Routes>
+
+
+<Route exact path='/' element={< Dashboard />}></Route>
                 <Route exact path='/notifications' element={< Notifications />}></Route>
-                <Route exact path='/templates' element={< Templates />}></Route>
+                <Route path="/notifications/:id" element={<Notificationsview />} />
                 <Route exact path='/webpush-notifications' element={< WebpushNotifications />}></Route>
+                <Route exact path='/templates' element={< Templates />}></Route>
                 <Route exact path='/webpush-template' element={< WebpushTemplate />}></Route>
-                
-                <Route exact path='/contact' element={< Contact />}></Route>
-        </Routes>
+                <Route exact path='/settings' element={< Settings />}></Route>
+                <Route exact path='/plans' element={< Plans />}></Route>
+      </Routes>
+      </BrowserRouter>
 
-    </Router>
-    </AppProvider>
   );
 }
 

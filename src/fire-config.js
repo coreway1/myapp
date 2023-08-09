@@ -1,8 +1,4 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js';
-// import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-analytics.js';
-// import { getAuth } from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js';
-// import { doc, setDoc, getFirestore, addDoc, collection, getDoc, deleteDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js';
-
+import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCh7jZ9eRWeiyj9GF6G9tWBhUsqZghB4U0",
@@ -12,6 +8,18 @@ const firebaseConfig = {
     messagingSenderId: "195167984137",
     appId: "1:195167984137:web:83226bef72f5960426f6d8"
   };
+
+
+  // const firebaseConfig = {
+  //   apiKey: "AIzaSyCTkcoQd9sLRfTeLp5osQuc8j9p4chktPo",
+  //   authDomain: "wishlist-53ac4.firebaseapp.com",
+  //   databaseURL: "https://wishlist-53ac4-default-rtdb.firebaseio.com",
+  //   projectId: "wishlist-53ac4",
+  //   storageBucket: "wishlist-53ac4.appspot.com",
+  //   messagingSenderId: "705361865502",
+  //   appId: "1:705361865502:web:d8954552e63c5aff11b70f",
+  //   measurementId: "G-LL9FDBMW46"
+  // };
   
 
   const app = initializeApp(firebaseConfig);

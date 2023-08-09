@@ -1,6 +1,6 @@
 
 import {Navigation} from '@shopify/polaris';
-import {HomeMinor, OrdersMinor, ProductsMinor} from '@shopify/polaris-icons';
+import {HomeMinor, SettingsMinor, ProductsMinor} from '@shopify/polaris-icons';
 import React from 'react';
 
 function NavigationMenu({path}) {
@@ -20,18 +20,18 @@ function NavigationMenu({path}) {
             {
               url: '/notifications',
               label: 'Notifications',
-              icon: OrdersMinor,
+              icon: ProductsMinor,
               selected: false,
               subNavigationItems: [
                 {
                   url: '/notifications',
                   disabled: false,
-                  label: 'Email',
+                  label: 'Email Notifications',
                 },
                 {
                   url: '/webpush-notifications',
                   disabled: false,
-                  label: 'WebPush',
+                  label: 'WebPush Notifications',
                 },
               ],
             },
@@ -52,6 +52,11 @@ function NavigationMenu({path}) {
                   label: 'WebPush Template',
                 },
               ],
+            },
+            {
+              url: '/settings',
+              label: 'Settings',
+              icon: SettingsMinor
             },
           ]}
         />
