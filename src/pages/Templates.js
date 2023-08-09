@@ -313,7 +313,584 @@ function Templates(){
     />
   );
   const previewmarkup = (
-    <Button>{subjectFieldValue}</Button>
+    <>
+  <title />
+  <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0 " />
+  <meta name="format-detection" content="telephone=no" />
+  {/*[if !mso]><!*/}
+  <link
+    href="https://fonts.googleapis.com/css?family=Lato:400,700"
+    rel="stylesheet"
+  />
+  {/*<![endif]*/}
+  <style
+    type="text/css"
+    dangerouslySetInnerHTML={{
+      __html:
+        "\n    body {\n      margin: 0 !important;\n      padding: 0 !important;\n      -webkit-text-size-adjust: 100% !important;\n      -ms-text-size-adjust: 100% !important;\n      -webkit-font-smoothing: antialiased !important;\n    }\n\n    img {\n      border: 0 !important;\n      outline: none !important;\n    }\n\n    p {\n      margin: 0px !important;\n      padding: 0px !important;\n    }\n\n    table {\n      border-collapse: collapse;\n      mso-table-lspace: 0px;\n      mso-table-rspace: 0px;\n    }\n\n    td, a, span {\n      border-collapse: collapse;\n      mso-line-height-rule: exactly;\n    }\n\n    .ExternalClass * {\n      line-height: 100%;\n    }\n\n    .em_defaultlink a {\n      color: inherit !important;\n      text-decoration: none !important;\n    }\n\n    span.MsoHyperlink {\n      mso-style-priority: 99;\n      color: inherit;\n    }\n\n    span.MsoHyperlinkFollowed {\n      mso-style-priority: 99;\n      color: inherit;\n    }\n\n    .em_header {\n      font-family: 'Lato', Arial, sans-serif;\n      font-size: 12px;\n      color: #888888;\n      text-decoration: none;\n    }\n\n    .em_header a {\n      color: #888888;\n      text-decoration: underline;\n    }\n\n    .em_text1 {\n      font-family: 'Lato', Arial, sans-serif;\n      font-size: 32px;\n      line-height: 37px;\n      color: #000;\n      text-decoration: none;\n      font-weight: bold;\n    }\n\n    .em_text2 {\n      font-family: 'Lato', Arial, sans-serif;\n      font-size: 19px;\n      line-height: 24px;\n      color: #333;\n      text-decoration: none;\n    }\n\n    .em_price_rules_text {\n      font-family: 'Lato', Arial, sans-serif;\n      font-size: 17px;\n      line-height: 24px;\n      color: ;\n      text-decoration: none;\n    }\n\n    .em_footer {\n      font-family: Arial, sans-serif;\n      font-size: 16px;\n      line-height: 24px;\n      color: #aaa;\n      text-decoration: none;\n    }\n\n    .em_footer a {\n      color: #777777;\n      text-decoration: underline;\n      white-space: nowrap;\n    }\n\n    .em_btn {\n      font-family: 'Lato', Arial, sans-serif;\n      font-size: 27px;\n      background-color: #222222;\n      text-decoration: none;\n      letter-spacing: 1px;\n    }\n\n    .em_btn a {\n      color: white;\n      text-decoration: none;\n    }\n\n    /*Stylesheet for the devices width between 481px to 599px*/\n    @media only screen and (min-width:481px) and (max-width:599px) {\n      .em_main_table {\n        width: 100% !important;\n      }\n\n      .em_wrapper {\n        width: 100% !important;\n      }\n\n      .em_side {\n        width: 10px !important;\n      }\n\n      .em_hide {\n        display: none !important;\n      }\n\n      .em_full_img {\n        width: 100% !important;\n        height: auto !important;\n      }\n\n      .em_center {\n        text-align: center !important;\n      }\n\n      .em_height {\n        height: 25px !important;\n      }\n\n      .em_gap_bottom {\n        padding-bottom: 20px !important;\n      }\n\n      .em_text1 {\n        font-size: 28px !important;\n        line-height: 30px !important;\n      }\n    }\n\n    /*Stylesheet for the devices width between 0px to 480px*/\n    @media only screen and (max-width:480px) {\n      .em_main_table {\n        width: 100% !important;\n      }\n\n      .em_wrapper {\n        width: 100% !important;\n      }\n\n      .em_side {\n        width: 10px !important;\n      }\n\n      .em_hide {\n        display: none !important;\n      }\n\n      .em_hide1 {\n        display: none !important;\n      }\n\n      .em_full_img {\n        width: 100% !important;\n        height: auto !important;\n      }\n\n      .em_center {\n        text-align: center !important;\n      }\n\n      .em_height {\n        height: 25px !important;\n      }\n\n      .em_gap_bottom {\n        padding-bottom: 20px !important;\n      }\n\n      .em_text1 {\n        font-size: 28px !important;\n        line-height: 30px !important;\n      }\n\n      .em_width {\n        width: 34px !important;\n        height: auto !important;\n      }\n\n      .em_footer {\n        font-size: 15px !important;\n        line-height: 23px !important;\n      }\n\n      .em_btn a {\n        text-decoration: none !important;\n      }\n    }\n  "
+    }}
+  />
+  {/*[if gte mso 9]>
+  <xml>
+    <o:OfficeDocumentSettings>
+<o:AllowPNG/>
+<o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+  </xml>
+  <![endif]*/}
+  <table width="100%" border={0} cellSpacing={0} cellPadding={0}>
+    <tbody>
+      <tr>
+        <td align="center">
+          <table
+            align="center"
+            width={600}
+            border={0}
+            cellSpacing={0}
+            cellPadding={0}
+            className="em_main_table"
+            style={{ tableLayout: "fixed" }}
+          >
+            <tbody>
+              <tr>
+                <td align="center" valign="top">
+                  <table
+                    width="100%"
+                    border={0}
+                    cellSpacing={0}
+                    cellPadding={0}
+                    align="center"
+                  >
+                    <tbody>
+                      <tr>
+                        <td
+                          width={25}
+                          style={{ width: 25 }}
+                          className="em_side"
+                        >
+                          &nbsp;
+                        </td>
+                        <td align="center" valign="top">
+                          <table
+                            width="100%"
+                            border={0}
+                            cellSpacing={0}
+                            cellPadding={0}
+                          >
+                            <tbody>
+                              <tr>
+                                <td
+                                  height={13}
+                                  style={{ fontSize: 1, lineHeight: 1 }}
+                                >
+                                  &nbsp;
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  align="center"
+                                  valign="middle"
+                                  className="em_header"
+                                  style={{
+                                    fontFamily: '"Lato", Arial, sans-serif',
+                                    fontSize: 12,
+                                    lineHeight: 18,
+                                    color: "#888888",
+                                    textDecoration: "none"
+                                  }}
+                                >
+                                  All Purpose Cleaner - 5 LTR m is available now
+                                  from products-fileds
+                                  <br className="em_hide1" />
+                                  <a
+                                    href="http://products-fileds.myshopify.com/products/all-purpose-cleaner?bis_id=%2A%7CBISID%7C%2A&utm_campaign=%2A%7CUTMCAMPAIGN%7C%2A&utm_content=%2A%7CUTMCONTENT%7C%2A&utm_medium=email&utm_source=back-in-stock&variant=42278590021878"
+                                    target="_blank"
+                                    style={{
+                                      whiteSpace: "nowrap",
+                                      color: "#888888",
+                                      textDecoration: "underline"
+                                    }}
+                                  >
+                                    View in browser
+                                  </a>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  height={13}
+                                  style={{ fontSize: 1, lineHeight: 1 }}
+                                >
+                                  &nbsp;
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td
+                          width={25}
+                          style={{ width: 25 }}
+                          className="em_side"
+                        >
+                          &nbsp;
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  height={1}
+                  style={{ fontSize: 1, lineHeight: 1 }}
+                  bgcolor="#dddddd"
+                >
+                  &nbsp;
+                </td>
+              </tr>
+              <tr>
+                <td align="center" valign="top">
+                  <table
+                    width="100%"
+                    border={0}
+                    cellSpacing={0}
+                    cellPadding={0}
+                    align="center"
+                  >
+                    <tbody>
+                      <tr>
+                        <td
+                          width={25}
+                          style={{ width: 25 }}
+                          className="em_side"
+                        >
+                          &nbsp;
+                        </td>
+                        <td align="center" valign="top">
+                          <table
+                            width="100%"
+                            border={0}
+                            cellSpacing={0}
+                            cellPadding={0}
+                          >
+                            <tbody>
+                              <tr>
+                                <td
+                                  height={30}
+                                  className="em_height"
+                                  style={{ height: 30 }}
+                                >
+                                  &nbsp;
+                                </td>
+                              </tr>
+                              <tr>
+                                <td align="center" valign="top">
+                                  <a
+                                    href="http://products-fileds.myshopify.com/products/all-purpose-cleaner?bis_id=%2A%7CBISID%7C%2A&utm_campaign=%2A%7CUTMCAMPAIGN%7C%2A&utm_content=%2A%7CUTMCONTENT%7C%2A&utm_medium=email&utm_source=back-in-stock&variant=42278590021878"
+                                    target="_blank"
+                                    style={{ textDecoration: "none" }}
+                                  >
+                                    <img
+                                      src=""
+                                      alt=""
+                                      width=""
+                                      height=""
+                                      style={{
+                                        display: "block",
+                                        border: "none",
+                                        maxWidth: ""
+                                      }}
+                                    />
+                                  </a>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  height={52}
+                                  className="em_height"
+                                  style={{ height: 52 }}
+                                >
+                                  &nbsp;
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  align="center"
+                                  valign="middle"
+                                  className="em_text1"
+                                  style={{
+                                    fontFamily: '"Lato", Arial, sans-serif',
+                                    fontSize: 32,
+                                    lineHeight: 37,
+                                    color: "#000",
+                                    textDecoration: "none",
+                                    fontWeight: "bold"
+                                  }}
+                                >
+                                  All Purpose Cleaner - 5 LTR m is available now
+                                  from products-fileds
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  height={28}
+                                  style={{ height: 28 }}
+                                  className="em_height"
+                                >
+                                  &nbsp;
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td
+                          width={25}
+                          style={{ width: 25 }}
+                          className="em_side"
+                        >
+                          &nbsp;
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td align="center" valign="top"></td>
+              </tr>
+              <tr>
+                <td align="center" valign="top">
+                  <table
+                    width="100%"
+                    border={0}
+                    cellSpacing={0}
+                    cellPadding={0}
+                    align="center"
+                  >
+                    <tbody>
+                      <tr>
+                        <td
+                          width={25}
+                          style={{ width: 25 }}
+                          className="em_side"
+                        >
+                          &nbsp;
+                        </td>
+                        <td align="center" valign="top">
+                          <table
+                            width="100%"
+                            border={0}
+                            cellSpacing={0}
+                            cellPadding={0}
+                          >
+                            <tbody>
+                              <tr>
+                                <td
+                                  height={24}
+                                  style={{ height: 24 }}
+                                  className="em_height"
+                                >
+                                  &nbsp;
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  align="center"
+                                  valign="middle"
+                                  className="em_text2"
+                                  style={{
+                                    fontFamily: '"Lato", Arial, sans-serif',
+                                    fontSize: 19,
+                                    lineHeight: 24,
+                                    color: "#333",
+                                    textDecoration: "none"
+                                  }}
+                                >
+                                  You asked us to tell you when All Purpose
+                                  Cleaner - 5 LTR m would be available to
+                                  purchase.
+                                  <br />
+                                  <br />
+                                  We are pleased to tell you it is now
+                                  available.
+                                  <br />
+                                  <br />
+                                  Click below to place your order.
+                                  <br />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  height={45}
+                                  style={{ fontSize: 1, lineHeight: 1 }}
+                                  className="em_height"
+                                >
+                                  &nbsp;
+                                </td>
+                              </tr>
+                              <tr>
+                                <td align="center" valign="top">
+                                  <table
+                                    width="50%"
+                                    border={0}
+                                    cellSpacing={0}
+                                    cellPadding={0}
+                                    align="center"
+                                    style={{ width: "50%" }}
+                                  >
+                                    <tbody>
+                                      <tr>
+                                        <td
+                                          height={0}
+                                          style={{
+                                            fontSize: 0,
+                                            lineHeight: 0,
+                                            height: 0
+                                          }}
+                                        />
+                                      </tr>
+                                      <tr>
+                                        <td align="center" valign="top">
+                                          <table
+                                            width="100%"
+                                            border={0}
+                                            cellSpacing={0}
+                                            cellPadding={0}
+                                            align="center"
+                                          >
+                                            <tbody>
+                                              <tr>
+                                                <td
+                                                  align="right"
+                                                  valign="middle"
+                                                  width="12%"
+                                                  style={{ width: "12%" }}
+                                                >
+                                                  &nbsp;
+                                                </td>
+                                                <td
+                                                  align="center"
+                                                  valign="middle"
+                                                  bgcolor="#222222 "
+                                                >
+                                                  <table
+                                                    width="100%"
+                                                    border={0}
+                                                    cellSpacing={0}
+                                                    cellPadding={0}
+                                                    bgcolor="#222222 "
+                                                  >
+                                                    <tbody>
+                                                      <tr>
+                                                        <td
+                                                          align="center"
+                                                          valign="middle"
+                                                          className="em_btn"
+                                                          style={{
+                                                            fontFamily:
+                                                              '"Lato", Arial, sans-serif',
+                                                            fontSize: 27,
+                                                            backgroundColor:
+                                                              "#222222",
+                                                            textDecoration:
+                                                              "none",
+                                                            letterSpacing: 1
+                                                          }}
+                                                        >
+                                                          <a
+                                                            href="http://products-fileds.myshopify.com/products/all-purpose-cleaner?bis_id=%2A%7CBISID%7C%2A&utm_campaign=%2A%7CUTMCAMPAIGN%7C%2A&utm_content=%2A%7CUTMCONTENT%7C%2A&utm_medium=email&utm_source=back-in-stock&variant=42278590021878"
+                                                            target="_blank"
+                                                            className="em_btn"
+                                                            style={{
+                                                              fontFamily:
+                                                                '"Lato", Arial, sans-serif',
+                                                              fontSize: 27,
+                                                              color: "white",
+                                                              textDecoration:
+                                                                "none",
+                                                              letterSpacing: 1,
+                                                              padding: 12,
+                                                              display:
+                                                                "inline-block",
+                                                              width: "100%"
+                                                            }}
+                                                          >
+                                                            BUY NOW
+                                                          </a>
+                                                        </td>
+                                                      </tr>
+                                                    </tbody>
+                                                  </table>
+                                                </td>
+                                                <td
+                                                  align="left"
+                                                  valign="middle"
+                                                  width="12%"
+                                                  style={{ width: "12%" }}
+                                                >
+                                                  &nbsp;
+                                                </td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td
+                                          height={0}
+                                          style={{
+                                            fontSize: 0,
+                                            lineHeight: 0,
+                                            height: 0
+                                          }}
+                                        />
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  height={60}
+                                  style={{ height: 60 }}
+                                  className="em_height"
+                                >
+                                  &nbsp;
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td
+                          width={25}
+                          style={{ width: 25 }}
+                          className="em_side"
+                        >
+                          &nbsp;
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td align="center" valign="top">
+                  <table
+                    width="100%"
+                    border={0}
+                    cellSpacing={0}
+                    cellPadding={0}
+                  >
+                    <tbody>
+                      <tr>
+                        <td
+                          width={25}
+                          style={{ width: 25 }}
+                          className="em_side"
+                        >
+                          &nbsp;
+                        </td>
+                        <td>
+                          <table
+                            width="100%"
+                            border={0}
+                            cellSpacing={0}
+                            cellPadding={0}
+                          >
+                            <tbody>
+                              <tr>
+                                <td
+                                  height={26}
+                                  className="em_height"
+                                  style={{ height: 26 }}
+                                >
+                                  &nbsp;
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  align="center"
+                                  valign="middle"
+                                  className="em_footer"
+                                  style={{
+                                    fontFamily: "Arial, sans-serif",
+                                    fontSize: 16,
+                                    lineHeight: 24,
+                                    color: "#aaa",
+                                    textDecoration: "none"
+                                  }}
+                                >
+                                  You are receiving this email because you
+                                  requested a back in stock notification on{" "}
+                                  <a
+                                    href="http://products-fileds.myshopify.com/products/all-purpose-cleaner?bis_id=%2A%7CBISID%7C%2A&utm_campaign=%2A%7CUTMCAMPAIGN%7C%2A&utm_content=%2A%7CUTMCONTENT%7C%2A&utm_medium=email&utm_source=back-in-stock&variant=42278590021878"
+                                    style={{
+                                      color: "!important",
+                                      textDecoration: "none"
+                                    }}
+                                  >
+                                    products-fileds
+                                  </a>
+                                  .<br />
+                                  products-fileds 301 Aaron, Ahmedabad 380009,
+                                  IN
+                                  <br />
+                                  <br />
+                                  <a href="%recipient.unsubscribe_url%">
+                                    Manage your notifications
+                                  </a>
+                                  <br />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  height={24}
+                                  className="em_height"
+                                  style={{ height: 24 }}
+                                >
+                                  &nbsp;
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  height={28}
+                                  className="em_height"
+                                  style={{ height: 28 }}
+                                >
+                                  &nbsp;
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td
+                          width={25}
+                          style={{ width: 25 }}
+                          className="em_side"
+                        >
+                          &nbsp;
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div
+    className="em_hide"
+    style={{ whiteSpace: "nowrap", font: "20px courier", color: "#FFFFFF" }}
+  >
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  </div>
+</>
+
   );
 
     return (
