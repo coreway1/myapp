@@ -10,7 +10,7 @@ function WebpushTemplate(){
   const defaultState = useRef({
     TitleFieldValue: '{{product.title | strip_html}} is now available',
     Description: '{{product.title | strip_html}} is now available to order from {{shop.name}}',
-    ButtonText: '',
+    ButtonText: 'BUY NOW',
     ButtonUrl: ''
   });
   const [isDirty, setIsDirty] = useState(false);
