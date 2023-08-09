@@ -8,8 +8,8 @@ function WebpushTemplate(){
   const db = getFirestore(app);
 
   const defaultState = useRef({
-    TitleFieldValue: '',
-    Description: '',
+    TitleFieldValue: '{{product.title | strip_html}} is now available',
+    Description: '{{product.title | strip_html}} is now available to order from {{shop.name}}',
     ButtonText: '',
     ButtonUrl: ''
   });
@@ -118,7 +118,43 @@ function WebpushTemplate(){
   }, []); 
 
   const previewmarkup = (
-    <Button>{TitleFieldValue}</Button>
+    <>
+  <link
+    rel="stylesheet"
+    href="https://static.backinstock.org/assets/web_push_preview-50501c80929f337ce619de70312cb1a5d91fef5e467704cbcb97ee99b6b78a86.css"
+    media="screen"
+  />
+  <div id="web-push-preview-container">
+    <div className="container" id="windows-notification-preview-container">
+      <div className="notification-summary">
+        <div className="icon">
+          <img src="https://static.backinstock.org/assets/chrome_logo-5974a6aa895594740db1e2824fad768e16cb4fa1c7ea05d862c53cf287517cbb.png" />
+        </div>
+        <div className="content">
+          <div className="title">
+            {TitleFieldValue}
+          </div>
+          <div className="message">
+            {Description}
+          </div>
+          <div className="source">Google Chrome • backinstock.org</div>
+        </div>
+      </div>
+      <div className="buttons">
+        <a
+          href={ButtonUrl}
+          rel="noopener noreferrer"
+          target="_blank"
+          type="button"
+        >
+          <div className="button">{ButtonText}</div>
+        </a>
+      </div>
+    </div>
+  
+  </div>
+</>
+
   );
 
     return (
