@@ -4,7 +4,7 @@ import NavigationMenu from "../component/navigation";
 
 function Settings(){
     return (
-        <Frame navigation={<NavigationMenu path="/templates" />}>
+        <Frame navigation={<NavigationMenu path="/settings" />}>
             <Page title="Settings">
       <Layout>
         <Layout.AnnotatedSection

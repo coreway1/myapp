@@ -68,8 +68,8 @@ import {
 
   
       return (
-        <Frame navigation={<NavigationMenu path="/plans" />}>
-          <Page title="Plans">
+        <Frame navigation={<NavigationMenu path="/settings" />}>
+          <Page title="Plans" backAction={{content: 'Settings', url: '/settings'}}>
   
   
   <Layout>

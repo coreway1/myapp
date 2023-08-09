@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
-import {Page, Layout, LegacyCard, Button, Frame, TextField, FormLayout, ContextualSaveBar, Toast} from '@shopify/polaris';
+import {Page, Layout, LegacyCard, Button, Frame, TextField, FormLayout, ContextualSaveBar, Toast, List, Form, DropZone, Banner} from '@shopify/polaris';
 import NavigationMenu from "../component/navigation";
 import app from "../fire-config.js";
 import { doc, setDoc, getFirestore, getDoc, deleteDoc } from 'firebase/firestore';
@@ -8,32 +8,69 @@ function WebpushTemplate(){
   const db = getFirestore(app);
 
   const defaultState = useRef({
-    subjectFieldValue: 'Item back in stock!',
+    TitleFieldValue: '',
+    Description: '',
+    ButtonText: '',
+    ButtonUrl: ''
   });
   const [isDirty, setIsDirty] = useState(false);
   const [toastActive, setToastActive] = useState(false);
 
-  const [subjectFieldValue, setsubjectFieldValue] = useState(
-    defaultState.current.subjectFieldValue,
+  const [TitleFieldValue, setTitleFieldValue] = useState(
+    defaultState.current.TitleFieldValue,
   );
+  const [Description, setDescription] = useState(
+    defaultState.current.Description,
+  );
+  const [ButtonText, setButtonText] = useState(
+    defaultState.current.ButtonText,
+  );
+  const [ButtonUrl, setButtonUrl] = useState(
+    defaultState.current.ButtonUrl,
+  );
+  
   const handleDiscard = useCallback(() => {
-    setsubjectFieldValue(defaultState.current.subjectFieldValue);
+    setTitleFieldValue(defaultState.current.TitleFieldValue);
+    setDescription(defaultState.current.Description);
+    setButtonText(defaultState.current.ButtonText);
+    setButtonUrl(defaultState.current.ButtonUrl);    
     setIsDirty(false);
   }, []);
 
-  const handleNameFieldChange = useCallback((value) => {
-    setsubjectFieldValue(value);
+  const handleTitleFieldChange = useCallback((value) => {
+    setTitleFieldValue(value);
     value && setIsDirty(true);
   }, []);
+  const handleDescriptionFieldChange = useCallback((value) => {
+    setDescription(value);
+    value && setIsDirty(true);
+  }, []);
+  const handleButtonTextChange = useCallback((value) => {
+    setButtonText(value);
+    value && setIsDirty(true);
+  }, []);
+  const handleButtonUrlChange = useCallback((value) => {
+    setButtonUrl(value);
+    value && setIsDirty(true);
+  }, []);
+  
+  
+
+  
 
   const handleSave = useCallback(async () => {
-    defaultState.current.subjectFieldValue = subjectFieldValue;
+    defaultState.current.TitleFieldValue = TitleFieldValue;
+    defaultState.current.Description = Description;
+    defaultState.current.ButtonText = ButtonText;
+    defaultState.current.ButtonUrl = ButtonUrl;
+    
+    
     setIsDirty(false);
     setToastActive(true);
-    const customerRef2 = doc(db, "61718233334", "emailtemplate");
-    await setDoc(customerRef2, {subjectFieldValue: subjectFieldValue});
+    const customerRef2 = doc(db, "61718233334", "webpushtemplate");
+    await setDoc(customerRef2, {TitleFieldValue: TitleFieldValue, Description: Description, ButtonText: ButtonText, ButtonUrl: ButtonUrl});
 
-  }, [subjectFieldValue]);
+  }, [TitleFieldValue, Description, ButtonText, ButtonUrl]);
 
   const toggleToastActive = useCallback(
     () => setToastActive((toastActive) => !toastActive),
@@ -56,24 +93,32 @@ function WebpushTemplate(){
     />
   ) : null;
 
-  const getemailtemplate = async (shopid) => {
+  const getwebpushtemplate = async (shopid) => {
 
-    const docRef = doc(db, shopid, "emailtemplate");
+    const docRef = doc(db, shopid, "webpushtemplate");
     const docSnap = await getDoc(docRef);
     var data = docSnap.data() ? docSnap.data() : {};
     var objectLength = Object.keys(data).length;
     if(objectLength > 0){
-      defaultState.current.subjectFieldValue = data.subjectFieldValue;
-      setsubjectFieldValue(data.subjectFieldValue);
+      defaultState.current.TitleFieldValue = data.TitleFieldValue;
+      defaultState.current.Description = data.Description;
+      defaultState.current.ButtonText = data.ButtonText;
+      defaultState.current.ButtonUrl = data.ButtonUrl;
+      
+      
+      setTitleFieldValue(data.TitleFieldValue);
+      setDescription(data.Description);
+      setButtonText(data.ButtonText);
+      setButtonUrl(data.ButtonUrl);
     }
   };
 
   useEffect(() => {
-    getemailtemplate("61718233334");
+    getwebpushtemplate("61718233334");
   }, []); 
 
   const previewmarkup = (
-    <Button>{subjectFieldValue}</Button>
+    <Button>{TitleFieldValue}</Button>
   );
 
     return (
@@ -84,9 +129,27 @@ function WebpushTemplate(){
                 <LegacyCard sectioned>
                   <FormLayout>
                     <TextField
-                      label="Subject"
-                      value={subjectFieldValue}
-                      onChange={handleNameFieldChange}
+                      label="Title"
+                      value={TitleFieldValue}
+                      onChange={handleTitleFieldChange}
+                      autoComplete="off"
+                    />
+                    <TextField
+                      label="Description"
+                      value={Description}
+                      onChange={handleDescriptionFieldChange}
+                      autoComplete="off"
+                    />
+                    <TextField
+                      label="Button Text"
+                      value={ButtonText}
+                      onChange={handleButtonTextChange}
+                      autoComplete="off"
+                    />
+                    <TextField
+                      label="Button Url"
+                      value={ButtonUrl}
+                      onChange={handleButtonUrlChange}
                       autoComplete="off"
                     />
                   </FormLayout>
