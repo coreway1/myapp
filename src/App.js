@@ -22,14 +22,14 @@ function App() {
       <Routes>
 
 
-<Route exact path='/' element={< Dashboard />}></Route>
-                <Route exact path='/notifications' element={< Notifications />}></Route>
-                <Route path="/notifications/:id" element={<Notificationsview />} />
-                <Route exact path='/webpush-notifications' element={< WebpushNotifications />}></Route>
-                <Route exact path='/templates' element={< Templates />}></Route>
-                <Route exact path='/webpush-template' element={< WebpushTemplate />}></Route>
-                <Route exact path='/settings' element={< Settings />}></Route>
-                <Route exact path='/plans' element={< Plans />}></Route>
+<Route exact path={`${process.env.PUBLIC_URL}/`} element={< Dashboard />}></Route>
+                <Route exact path={`${process.env.PUBLIC_URL}/notifications`} element={< Notifications />}></Route>
+                <Route path={`${process.env.PUBLIC_URL}/notifications/:id`} element={<Notificationsview />} />
+                <Route exact path={`${process.env.PUBLIC_URL}/webpush-notifications`} element={< WebpushNotifications />}></Route>
+                <Route exact path={`${process.env.PUBLIC_URL}/templates`} element={< Templates />}></Route>
+                <Route exact path={`${process.env.PUBLIC_URL}/webpush-template`} element={< WebpushTemplate />}></Route>
+                <Route exact path={`${process.env.PUBLIC_URL}/settings`} element={< Settings />}></Route>
+                <Route exact path={`${process.env.PUBLIC_URL}/plans`} element={< Plans />}></Route>
       </Routes>
       </BrowserRouter>
 

@@ -8,53 +8,53 @@ function NavigationMenu({path}) {
 
   return (
 
-      <Navigation location={path}>
+      <Navigation location={`${process.env.PUBLIC_URL}${path}`}>
         <Navigation.Section
           items={[
             {
-              url: '/',
+              url: `${process.env.PUBLIC_URL}/`,
               label: 'Dashboard',
               icon: HomeMinor,
               exactMatch: true
             },
             {
-              url: '/notifications',
+              url: `${process.env.PUBLIC_URL}/notifications`,
               label: 'Notifications',
               icon: ProductsMinor,
               selected: false,
               subNavigationItems: [
                 {
-                  url: '/notifications',
+                  url: `${process.env.PUBLIC_URL}/notifications`,
                   disabled: false,
                   label: 'Email Notifications',
                 },
                 {
-                  url: '/webpush-notifications',
+                  url: `${process.env.PUBLIC_URL}/webpush-notifications`,
                   disabled: false,
                   label: 'WebPush Notifications',
                 },
               ],
             },
             {
-              url: '/templates',
+              url: `${process.env.PUBLIC_URL}/templates`,
               label: 'Templates',
               icon: ProductsMinor,
               selected: false,
               subNavigationItems: [
                 {
-                  url: '/templates',
+                  url: `${process.env.PUBLIC_URL}/templates`,
                   disabled: false,
                   label: 'Email Template',
                 },
                 {
-                  url: '/webpush-template',
+                  url: `${process.env.PUBLIC_URL}/webpush-template`,
                   disabled: false,
                   label: 'WebPush Template',
                 },
               ],
             },
             {
-              url: '/settings',
+              url: `${process.env.PUBLIC_URL}/settings`,
               label: 'Settings',
               icon: SettingsMinor
             },

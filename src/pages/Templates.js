@@ -365,13 +365,7 @@ function Templates(){
                   >
                     <tbody>
                       <tr>
-                        <td
-                          width={25}
-                          style={{ width: 25 }}
-                          className="em_side"
-                        >
-                          &nbsp;
-                        </td>
+                       
                         <td align="center" valign="top">
                           <table
                             width="100%"
@@ -380,14 +374,7 @@ function Templates(){
                             cellPadding={0}
                           >
                             <tbody>
-                              <tr>
-                                <td
-                                  height={13}
-                                  style={{ fontSize: 1, lineHeight: 1 }}
-                                >
-                                  &nbsp;
-                                </td>
-                              </tr>
+                              
                               <tr>
                                 <td
                                   align="center"
@@ -417,36 +404,14 @@ function Templates(){
                                   </a>
                                 </td>
                               </tr>
-                              <tr>
-                                <td
-                                  height={13}
-                                  style={{ fontSize: 1, lineHeight: 1 }}
-                                >
-                                  &nbsp;
-                                </td>
-                              </tr>
+                           
                             </tbody>
                           </table>
                         </td>
-                        <td
-                          width={25}
-                          style={{ width: 25 }}
-                          className="em_side"
-                        >
-                          &nbsp;
-                        </td>
+                       
                       </tr>
                     </tbody>
                   </table>
-                </td>
-              </tr>
-              <tr>
-                <td
-                  height={1}
-                  style={{ fontSize: 1, lineHeight: 1 }}
-                  bgcolor="#dddddd"
-                >
-                  &nbsp;
                 </td>
               </tr>
               <tr>
@@ -460,13 +425,7 @@ function Templates(){
                   >
                     <tbody>
                       <tr>
-                        <td
-                          width={25}
-                          style={{ width: 25 }}
-                          className="em_side"
-                        >
-                          &nbsp;
-                        </td>
+                       
                         <td align="center" valign="top">
                           <table
                             width="100%"
@@ -475,15 +434,7 @@ function Templates(){
                             cellPadding={0}
                           >
                             <tbody>
-                              <tr>
-                                <td
-                                  height={30}
-                                  className="em_height"
-                                  style={{ height: 30 }}
-                                >
-                                  &nbsp;
-                                </td>
-                              </tr>
+                            
                               <tr>
                                 <td align="center" valign="top">
                                   <a
@@ -505,15 +456,7 @@ function Templates(){
                                   </a>
                                 </td>
                               </tr>
-                              <tr>
-                                <td
-                                  height={52}
-                                  className="em_height"
-                                  style={{ height: 52 }}
-                                >
-                                  &nbsp;
-                                </td>
-                              </tr>
+                            
                               <tr>
                                 <td
                                   align="center"
@@ -532,25 +475,11 @@ function Templates(){
                                   from products-fileds
                                 </td>
                               </tr>
-                              <tr>
-                                <td
-                                  height={28}
-                                  style={{ height: 28 }}
-                                  className="em_height"
-                                >
-                                  &nbsp;
-                                </td>
-                              </tr>
+                            
                             </tbody>
                           </table>
                         </td>
-                        <td
-                          width={25}
-                          style={{ width: 25 }}
-                          className="em_side"
-                        >
-                          &nbsp;
-                        </td>
+                       
                       </tr>
                     </tbody>
                   </table>
