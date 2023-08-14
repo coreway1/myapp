@@ -11,7 +11,7 @@ function WebpushTemplate({shop, shopid}){
     TitleFieldValue: '{{product.title | strip_html}} is now available',
     Description: '{{product.title | strip_html}} is now available to order from {{shop.name}}',
     ButtonText: 'BUY NOW',
-    ButtonUrl: ''
+    ButtonUrl: '{{ variant.url }}'
   });
   const [isDirty, setIsDirty] = useState(false);
   const [toastActive, setToastActive] = useState(false);
@@ -98,6 +98,7 @@ function WebpushTemplate({shop, shopid}){
     const docRef = doc(db, shopid, "webpushtemplate");
     const docSnap = await getDoc(docRef);
     var data = docSnap.data() ? docSnap.data() : {};
+
     var objectLength = Object.keys(data).length;
     if(objectLength > 0){
       defaultState.current.TitleFieldValue = data.TitleFieldValue;

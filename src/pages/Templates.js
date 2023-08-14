@@ -15,7 +15,7 @@ function Templates({shop, shopid}){
     HeadingFieldTextColor: '',
     BodyFieldTextColor: '',
     LinkFieldTextColor: '',
-    ContentFieldText: 'You asked us to tell you when {{product.title}} {{ variant.title_unless_default }} would be available to purchase.We are pleased to tell you it is now available.Click below to place your order.',
+    ContentFieldText: 'You asked us to tell you when {{product.title}} {{variant.title}} would be available to purchase.We are pleased to tell you it is now available.Click below to place your order.',
     BuyButtonFieldTextColor: '',
     BuyButtonFieldBackgroundColor: '',
     BuyButtonFieldText: 'BUY NOW',
@@ -23,7 +23,11 @@ function Templates({shop, shopid}){
     FooterLinkFieldTextColor: '',
     FooterContentFieldText: 'You are receiving this email because you requested a back in stock notification on <a href="{{variant.url }}" style="color: {{ link_color }} !important; text-decoration: none;">{{ shop.name }}</a>.{{ shop.name }} {{ shop.address1 }}, {{ shop.city }} {{ shop.zip }}, {{ shop.country }}<a href="{{ customer.unsubscribe_url }}">Manage your notifications</a>'
   });
+  const [previewproduct, setpreviewproduct] = useState([]);
   const [isDirty, setIsDirty] = useState(false);
+
+  
+
   const [toastActive, setToastActive] = useState(false);
 
   const [subjectFieldValue, setsubjectFieldValue] = useState(
@@ -118,6 +122,7 @@ function Templates({shop, shopid}){
     async function Main() {
       var finallogo = await toBase64(file);
       setFile(finallogo);
+      return finallogo;
     }
 
  
@@ -177,7 +182,9 @@ function Templates({shop, shopid}){
   
 
   const handleSave = useCallback(async () => {
-    Main();
+    
+
+
     defaultState.current.subjectFieldValue = subjectFieldValue;
     defaultState.current.fromemailField = fromemailField;
     defaultState.current.LogoFieldValue = file;
@@ -200,7 +207,7 @@ function Templates({shop, shopid}){
     setIsDirty(false);
     setToastActive(true);
     const customerRef2 = doc(db, shopid, "emailtemplate");
-    await setDoc(customerRef2, {subjectFieldValue: subjectFieldValue, fromemailField: fromemailField, LogoFieldValue: file, HeadingFieldValue: HeadingFieldValue, HeadingFieldTextColor: HeadingFieldTextColor, BodyFieldTextColor: BodyFieldTextColor, LinkFieldTextColor: LinkFieldTextColor, ContentFieldText: ContentFieldText, BuyButtonFieldTextColor: BuyButtonFieldTextColor, BuyButtonFieldBackgroundColor: BuyButtonFieldBackgroundColor, BuyButtonFieldText: BuyButtonFieldText, FooterFieldTextColor: FooterFieldTextColor, FooterLinkFieldTextColor: FooterLinkFieldTextColor, FooterContentFieldText: FooterContentFieldText});
+    await setDoc(customerRef2, {subjectFieldValue: subjectFieldValue, fromemailField: fromemailField, LogoFieldValue: await Main(), HeadingFieldValue: HeadingFieldValue, HeadingFieldTextColor: HeadingFieldTextColor, BodyFieldTextColor: BodyFieldTextColor, LinkFieldTextColor: LinkFieldTextColor, ContentFieldText: ContentFieldText, BuyButtonFieldTextColor: BuyButtonFieldTextColor, BuyButtonFieldBackgroundColor: BuyButtonFieldBackgroundColor, BuyButtonFieldText: BuyButtonFieldText, FooterFieldTextColor: FooterFieldTextColor, FooterLinkFieldTextColor: FooterLinkFieldTextColor, FooterContentFieldText: FooterContentFieldText});
 
   }, [subjectFieldValue, fromemailField, file, HeadingFieldValue, HeadingFieldTextColor, BodyFieldTextColor, LinkFieldTextColor, ContentFieldText, BuyButtonFieldTextColor, BuyButtonFieldBackgroundColor, BuyButtonFieldText, FooterFieldTextColor, FooterLinkFieldTextColor, FooterContentFieldText]);
 
@@ -230,6 +237,8 @@ function Templates({shop, shopid}){
     const docRef = doc(db, shopid, "emailtemplate");
     const docSnap = await getDoc(docRef);
     var data = docSnap.data() ? docSnap.data() : {};
+   
+
     var objectLength = Object.keys(data).length;
     if(objectLength > 0){
       defaultState.current.subjectFieldValue = data.subjectFieldValue;
@@ -270,9 +279,26 @@ function Templates({shop, shopid}){
     }
   };
 
+  const getpreviewproduct = async (shop) => {
+
+    const rawResponse = await fetch('https://app.mobivogue.com/react-php-final/getpreviewproduct.php?shop='+shop, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+    const content = await rawResponse.json();
+    setpreviewproduct(content.data.products.edges[0]);
+
+  };
+
   useEffect(() => {
     if(shopid) getemailtemplate(shopid);
-  }, [shopid]); 
+    if(shop) getpreviewproduct(shop);
+
+    console.log(previewproduct.node.title);
+
+  }, [shopid, shop]); 
 
 
 
@@ -365,7 +391,7 @@ function Templates({shop, shopid}){
                   >
                     <tbody>
                       <tr>
-                       
+       
                         <td align="center" valign="top">
                           <table
                             width="100%"
@@ -382,17 +408,17 @@ function Templates({shop, shopid}){
                                   className="em_header"
                                   style={{
                                     fontFamily: '"Lato", Arial, sans-serif',
-                                    fontSize: 12,
-                                    lineHeight: 18,
+                                    fontSize: "12px",
+                                    lineHeight: "18px",
                                     color: "#888888",
                                     textDecoration: "none"
                                   }}
                                 >
-                                  All Purpose Cleaner - 5 LTR m is available now
-                                  from products-fileds
+                                  {subjectFieldValue.replace("{{product.title}}",previewproduct.node.title).replace("{{shop.name}}",shop)}
+                        
                                   <br className="em_hide1" />
                                   <a
-                                    href="http://products-fileds.myshopify.com/products/all-purpose-cleaner?bis_id=%2A%7CBISID%7C%2A&utm_campaign=%2A%7CUTMCAMPAIGN%7C%2A&utm_content=%2A%7CUTMCONTENT%7C%2A&utm_medium=email&utm_source=back-in-stock&variant=42278590021878"
+                                    href={previewproduct.node.onlineStorePreviewUrl}
                                     target="_blank"
                                     style={{
                                       whiteSpace: "nowrap",
@@ -438,7 +464,7 @@ function Templates({shop, shopid}){
                               <tr>
                                 <td align="center" valign="top">
                                   <a
-                                    href="http://products-fileds.myshopify.com/products/all-purpose-cleaner?bis_id=%2A%7CBISID%7C%2A&utm_campaign=%2A%7CUTMCAMPAIGN%7C%2A&utm_content=%2A%7CUTMCONTENT%7C%2A&utm_medium=email&utm_source=back-in-stock&variant=42278590021878"
+                                    href={previewproduct.node.onlineStorePreviewUrl}
                                     target="_blank"
                                     style={{ textDecoration: "none" }}
                                   >
@@ -464,15 +490,15 @@ function Templates({shop, shopid}){
                                   className="em_text1"
                                   style={{
                                     fontFamily: '"Lato", Arial, sans-serif',
-                                    fontSize: 32,
-                                    lineHeight: 37,
+                                    fontSize: "32px",
+                                    lineHeight: "37px",
                                     color: "#000",
                                     textDecoration: "none",
                                     fontWeight: "bold"
                                   }}
                                 >
-                                  All Purpose Cleaner - 5 LTR m is available now
-                                  from products-fileds
+                                   {HeadingFieldValue.replace("{{product.title}}",previewproduct.node.title).replace("{{variant.title}}",previewproduct.node.variants.edges[0].node.title).replace("{{shop.name}}",shop)}
+                        
                                 </td>
                               </tr>
                             
@@ -530,23 +556,14 @@ function Templates({shop, shopid}){
                                   className="em_text2"
                                   style={{
                                     fontFamily: '"Lato", Arial, sans-serif',
-                                    fontSize: 19,
-                                    lineHeight: 24,
+                                    fontSize: "19px",
+                                    lineHeight: "24px",
                                     color: "#333",
                                     textDecoration: "none"
                                   }}
                                 >
-                                  You asked us to tell you when All Purpose
-                                  Cleaner - 5 LTR m would be available to
-                                  purchase.
-                                  <br />
-                                  <br />
-                                  We are pleased to tell you it is now
-                                  available.
-                                  <br />
-                                  <br />
-                                  Click below to place your order.
-                                  <br />
+                                {ContentFieldText.replace("{{product.title}}",previewproduct.node.title).replace("{{variant.title}}",previewproduct.node.variants.edges[0].node.title)}
+                        
                                 </td>
                               </tr>
                               <tr>
@@ -628,7 +645,7 @@ function Templates({shop, shopid}){
                                                           }}
                                                         >
                                                           <a
-                                                            href="http://products-fileds.myshopify.com/products/all-purpose-cleaner?bis_id=%2A%7CBISID%7C%2A&utm_campaign=%2A%7CUTMCAMPAIGN%7C%2A&utm_content=%2A%7CUTMCONTENT%7C%2A&utm_medium=email&utm_source=back-in-stock&variant=42278590021878"
+                                                            href={previewproduct.node.onlineStorePreviewUrl}
                                                             target="_blank"
                                                             className="em_btn"
                                                             style={{
@@ -645,7 +662,7 @@ function Templates({shop, shopid}){
                                                               width: "100%"
                                                             }}
                                                           >
-                                                            BUY NOW
+                                                          {BuyButtonFieldText}
                                                           </a>
                                                         </td>
                                                       </tr>
@@ -744,25 +761,25 @@ function Templates({shop, shopid}){
                                   className="em_footer"
                                   style={{
                                     fontFamily: "Arial, sans-serif",
-                                    fontSize: 16,
-                                    lineHeight: 24,
+                                    fontSize: "16px",
+                                    lineHeight: "24px",
                                     color: "#aaa",
                                     textDecoration: "none"
                                   }}
                                 >
-                                  You are receiving this email because you
-                                  requested a back in stock notification on{" "}
+                                  {FooterContentFieldText.replace("{{variant.url}}",previewproduct.node.onlineStorePreviewUrl).replace("{{link_color}}",FooterLinkFieldTextColor).replace("{{shop.name}}",shop)}
+                        
                                   <a
-                                    href="http://products-fileds.myshopify.com/products/all-purpose-cleaner?bis_id=%2A%7CBISID%7C%2A&utm_campaign=%2A%7CUTMCAMPAIGN%7C%2A&utm_content=%2A%7CUTMCONTENT%7C%2A&utm_medium=email&utm_source=back-in-stock&variant=42278590021878"
+                                    href={previewproduct.node.onlineStorePreviewUrl}
                                     style={{
                                       color: "!important",
                                       textDecoration: "none"
                                     }}
                                   >
-                                    products-fileds
+                                    {shop}
                                   </a>
                                   .<br />
-                                  products-fileds 301 Aaron, Ahmedabad 380009,
+                                  {shop} 301 Aaron, Ahmedabad 380009,
                                   IN
                                   <br />
                                   <br />
