@@ -15,7 +15,7 @@ import app from "../fire-config.js";
 import { doc, setDoc, getFirestore, getDoc, deleteDoc } from 'firebase/firestore';
 
 
-export default function WebpushNotifications() {
+export default function WebpushNotifications({shop, shopid}) {
 
 
   const db = getFirestore(app);
@@ -37,7 +37,9 @@ export default function WebpushNotifications() {
   const getnotificationsdetails = async (modifiedArr) => {
     var formData = new FormData();
         formData.append('ids', JSON.stringify(modifiedArr));
-    const rawResponse = await fetch('https://app.mobivogue.com/instockalert/getnotifications.php', {
+        formData.append('shop', shop);
+
+    const rawResponse = await fetch('https://app.mobivogue.com/react-php-final/getnotifications.php', {
       method: 'POST',
       headers: {
         'Accept': 'application/json'
@@ -60,9 +62,11 @@ export default function WebpushNotifications() {
     const modifiedArr = emailnoti.map(name => `gid://shopify/ProductVariant/${name}`);
     getnotificationsdetails(modifiedArr);
   };
+
   useEffect(() => {
-    getemailnotifications("61718233334");   
-  }, []); 
+    if(shopid) getemailnotifications(shopid);   
+  }, [shopid]); 
+
 
   const itemStrings = ['All'];
 
@@ -107,9 +111,9 @@ export default function WebpushNotifications() {
       for (let i = 0; i < selectedResources.length; i++) {
         delete newarray[selectedResources[i].split("ProductVariant/")[1]];
       }
-      const customerRef2 = doc(db, "61718233334", "webpush");
+      const customerRef2 = doc(db, shopid, "webpush");
       await setDoc(customerRef2, {data: newarray});
-      getemailnotifications("61718233334");
+      getemailnotifications(shopid);
       handleSelectionChange('all', false);
       setloading(false);
     };

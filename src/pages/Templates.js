@@ -4,7 +4,7 @@ import NavigationMenu from "../component/navigation";
 import app from "../fire-config.js";
 import { doc, setDoc, getFirestore, getDoc, deleteDoc } from 'firebase/firestore';
 
-function Templates(){
+function Templates({shop, shopid}){
   const db = getFirestore(app);
 
   const defaultState = useRef({
@@ -199,7 +199,7 @@ function Templates(){
     
     setIsDirty(false);
     setToastActive(true);
-    const customerRef2 = doc(db, "61718233334", "emailtemplate");
+    const customerRef2 = doc(db, shopid, "emailtemplate");
     await setDoc(customerRef2, {subjectFieldValue: subjectFieldValue, fromemailField: fromemailField, LogoFieldValue: file, HeadingFieldValue: HeadingFieldValue, HeadingFieldTextColor: HeadingFieldTextColor, BodyFieldTextColor: BodyFieldTextColor, LinkFieldTextColor: LinkFieldTextColor, ContentFieldText: ContentFieldText, BuyButtonFieldTextColor: BuyButtonFieldTextColor, BuyButtonFieldBackgroundColor: BuyButtonFieldBackgroundColor, BuyButtonFieldText: BuyButtonFieldText, FooterFieldTextColor: FooterFieldTextColor, FooterLinkFieldTextColor: FooterLinkFieldTextColor, FooterContentFieldText: FooterContentFieldText});
 
   }, [subjectFieldValue, fromemailField, file, HeadingFieldValue, HeadingFieldTextColor, BodyFieldTextColor, LinkFieldTextColor, ContentFieldText, BuyButtonFieldTextColor, BuyButtonFieldBackgroundColor, BuyButtonFieldText, FooterFieldTextColor, FooterLinkFieldTextColor, FooterContentFieldText]);
@@ -271,8 +271,8 @@ function Templates(){
   };
 
   useEffect(() => {
-    getemailtemplate("61718233334");
-  }, []); 
+    if(shopid) getemailtemplate(shopid);
+  }, [shopid]); 
 
 
 

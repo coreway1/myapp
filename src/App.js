@@ -13,7 +13,7 @@ import './App.css';
  
 function App() {
 
-  const [shopid, setshopid] = useState('');
+  const [shopid, setshopid] = useState(false);
   const getshopid = async (shop) => {
     if(shop){
       const rawResponse = await fetch('https://app.mobivogue.com/react-php-final/getshopid.php?shop='+shop, {

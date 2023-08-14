@@ -2,7 +2,7 @@ import React from 'react';
 import {Page, Layout, LegacyCard, Button, Frame, Banner} from '@shopify/polaris';
 import NavigationMenu from "../component/navigation";
 
-function Settings(){
+function Settings({shop, shopid}){
     return (
         <Frame navigation={<NavigationMenu path="/settings" />}>
             <Page title="Settings">

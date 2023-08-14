@@ -17,7 +17,7 @@ import { useLocation, useParams } from "react-router";
 import app from "../fire-config.js";
 import { doc, setDoc, getFirestore } from 'firebase/firestore';
 
-export default function Notificationsview(props) {
+export default function Notificationsview({shop, shopid}) {
 
   const [active, setActive] = useState(false);
   const toggleActive = useCallback(() => setActive((active) => !active), []);
@@ -74,8 +74,15 @@ export default function Notificationsview(props) {
     plural: 'emails',
   };
 
+  const resourceIDResolver = (orders, index) => {
+    return index;
+  };
+
+
   const {selectedResources, allResourcesSelected, handleSelectionChange} =
-    useIndexResourceState(orders);
+    useIndexResourceState(orders, {
+    resourceIDResolver,
+  });
 
     const handledelete = async () => {
       var array = orders;
@@ -84,7 +91,7 @@ export default function Notificationsview(props) {
         array.splice(selectedResources[i], 1);
       }
       data[id] = array;
-      const customerRef2 = doc(db, "61718233334", "notifications");
+      const customerRef2 = doc(db, shopid, "notifications");
       await setDoc(customerRef2, {data: data});
       handleSelectionChange('all', false);
       setloading(false);
@@ -105,7 +112,7 @@ export default function Notificationsview(props) {
         array.push(email);
       }
       data[id] = array;
-      const customerRef2 = doc(db, "61718233334", "notifications");
+      const customerRef2 = doc(db, shopid, "notifications");
       await setDoc(customerRef2, {data: data});
       setloading(false);
       toggleActive();

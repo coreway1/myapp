@@ -65,8 +65,8 @@ export default function Notifications({shop, shopid}) {
     getnotificationsdetails(modifiedArr);
   };
   useEffect(() => {
-    getemailnotifications("61718233334");   
-  }, []); 
+    if(shopid) getemailnotifications(shopid);   
+  }, [shopid]); 
 
   const itemStrings = ['All'];
 
@@ -111,9 +111,9 @@ export default function Notifications({shop, shopid}) {
       for (let i = 0; i < selectedResources.length; i++) {
         delete newarray[selectedResources[i].split("ProductVariant/")[1]];
       }
-      const customerRef2 = doc(db, "61718233334", "notifications");
+      const customerRef2 = doc(db, shopid, "notifications");
       await setDoc(customerRef2, {data: newarray});
-      getemailnotifications("61718233334");
+      getemailnotifications(shopid);
       handleSelectionChange('all', false);
       setloading(false);
     };

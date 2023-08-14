@@ -18,7 +18,7 @@ import {
 
   import {useNavigate} from "react-router-dom"
   
-  export default function Plans() {
+  export default function Plans({shop, shopid}) {
 
   
     const [activeplan, setactiveplan] = useState(false);

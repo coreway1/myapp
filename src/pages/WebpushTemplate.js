@@ -4,7 +4,7 @@ import NavigationMenu from "../component/navigation";
 import app from "../fire-config.js";
 import { doc, setDoc, getFirestore, getDoc, deleteDoc } from 'firebase/firestore';
 
-function WebpushTemplate(){
+function WebpushTemplate({shop, shopid}){
   const db = getFirestore(app);
 
   const defaultState = useRef({
@@ -67,7 +67,7 @@ function WebpushTemplate(){
     
     setIsDirty(false);
     setToastActive(true);
-    const customerRef2 = doc(db, "61718233334", "webpushtemplate");
+    const customerRef2 = doc(db, shopid, "webpushtemplate");
     await setDoc(customerRef2, {TitleFieldValue: TitleFieldValue, Description: Description, ButtonText: ButtonText, ButtonUrl: ButtonUrl});
 
   }, [TitleFieldValue, Description, ButtonText, ButtonUrl]);
@@ -114,8 +114,8 @@ function WebpushTemplate(){
   };
 
   useEffect(() => {
-    getwebpushtemplate("61718233334");
-  }, []); 
+    if(shopid) getwebpushtemplate(shopid);
+  }, [shopid]); 
 
   const previewmarkup = (
     <>
