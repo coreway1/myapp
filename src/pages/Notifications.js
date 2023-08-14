@@ -16,7 +16,7 @@ import app from "../fire-config.js";
 import { doc, setDoc, getFirestore, getDoc, deleteDoc } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 
-export default function Notifications() {
+export default function Notifications({shop, shopid}) {
 
 
   const db = getFirestore(app);
@@ -38,7 +38,10 @@ export default function Notifications() {
   const getnotificationsdetails = async (modifiedArr) => {
     var formData = new FormData();
         formData.append('ids', JSON.stringify(modifiedArr));
-    const rawResponse = await fetch('https://app.mobivogue.com/instockalert/getnotifications.php', {
+        formData.append('shop', shop);
+        
+
+    const rawResponse = await fetch('https://app.mobivogue.com/react-php-final/getnotifications.php', {
       method: 'POST',
       headers: {
         'Accept': 'application/json'

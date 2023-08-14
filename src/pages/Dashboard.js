@@ -10,10 +10,10 @@ import NavigationMenu from "../component/navigation";
 import Linechart from "../component/Linechart";
 import {CustomerPlusMajor, SendMajor, QuickSaleMajor} from '@shopify/polaris-icons';
 import app from "../fire-config.js";
-import { doc, setDoc, getFirestore, getDoc, deleteDoc } from 'firebase/firestore';
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { doc, getFirestore, getDoc } from 'firebase/firestore';
+import { useState, useEffect } from 'react';
 
-function Dashboard() {
+function Dashboard({shop, shopid}) {
   const db = getFirestore(app);
 
   const [totlanotifi, settotlanotifi] = useState(0);
@@ -22,6 +22,7 @@ function Dashboard() {
   
 
   const gettotalnotifications = async (shopid) => {
+
 
     const docRef = doc(db, shopid, "notifications");
     const docSnap = await getDoc(docRef);
@@ -52,8 +53,8 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    gettotalnotifications("61718233334");
-  }, []); 
+    if(shopid) gettotalnotifications(shopid);
+  }, [shopid]); 
 
   return (
     <Frame navigation={<NavigationMenu path="/" />}>
