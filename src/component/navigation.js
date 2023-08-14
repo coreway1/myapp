@@ -8,53 +8,53 @@ function NavigationMenu({path}) {
 
   return (
 
-      <Navigation location={`${process.env.PUBLIC_URL}${path}`}>
+      <Navigation location={`${path}`}>
         <Navigation.Section
           items={[
             {
-              url: `${process.env.PUBLIC_URL}/`,
+              url: `/`,
               label: 'Dashboard',
               icon: HomeMinor,
               exactMatch: true
             },
             {
-              url: `${process.env.PUBLIC_URL}/notifications`,
+              url: `/notifications`,
               label: 'Notifications',
               icon: ProductsMinor,
               selected: false,
               subNavigationItems: [
                 {
-                  url: `${process.env.PUBLIC_URL}/notifications`,
+                  url: `/notifications`,
                   disabled: false,
                   label: 'Email Notifications',
                 },
                 {
-                  url: `${process.env.PUBLIC_URL}/webpush-notifications`,
+                  url: `/webpush-notifications`,
                   disabled: false,
                   label: 'WebPush Notifications',
                 },
               ],
             },
             {
-              url: `${process.env.PUBLIC_URL}/templates`,
+              url: `/templates`,
               label: 'Templates',
               icon: ProductsMinor,
               selected: false,
               subNavigationItems: [
                 {
-                  url: `${process.env.PUBLIC_URL}/templates`,
+                  url: `/templates`,
                   disabled: false,
                   label: 'Email Template',
                 },
                 {
-                  url: `${process.env.PUBLIC_URL}/webpush-template`,
+                  url: `/webpush-template`,
                   disabled: false,
                   label: 'WebPush Template',
                 },
               ],
             },
             {
-              url: `${process.env.PUBLIC_URL}/settings`,
+              url: `/settings`,
               label: 'Settings',
               icon: SettingsMinor
             },
