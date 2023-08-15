@@ -33,20 +33,7 @@ return(
  data={[
       {
         name: "Notifications",
-        data: [
-          {
-            key: 0,
-            value: 100
-          },
-          {
-            key: 1,
-            value: 200
-          },
-          {
-            key: 2,
-            value: 300
-          }
-        ]
+        data: Notifications
       },
       {
         name: "Notifications sent",
