@@ -12,7 +12,7 @@ import {
 import { useState, useCallback, useEffect, useRef } from 'react';
 import NavigationMenu from "../component/navigation";
 import app from "../fire-config.js";
-import { doc, setDoc, getFirestore, getDoc, deleteDoc } from 'firebase/firestore';
+import { doc, setDoc, getFirestore, getDoc } from 'firebase/firestore';
 
 
 export default function WebpushNotifications({shop, shopid}) {
@@ -24,9 +24,6 @@ export default function WebpushNotifications({shop, shopid}) {
   const [hasNext, sethasNext] = useState(false);
   const [currentpage, setcurrentpage] = useState(1);
   const [totalpage, settotalpage] = useState(0);
-  const [keys, setkeys] = useState([]);
-
-  const [emailnotifications, setemailnotifications] = useState([]);
   const [data, setdata] = useState({});
   const [data2, setdata2] = useState({});
   

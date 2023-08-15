@@ -1,8 +1,8 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
-import {Page, Layout, LegacyCard, Button, Frame, TextField, FormLayout, ContextualSaveBar, Toast, List, Form, DropZone, Banner} from '@shopify/polaris';
+import {Page, Layout, LegacyCard, Frame, TextField, FormLayout, ContextualSaveBar, Toast, List, Form, DropZone, Banner} from '@shopify/polaris';
 import NavigationMenu from "../component/navigation";
 import app from "../fire-config.js";
-import { doc, setDoc, getFirestore, getDoc, deleteDoc } from 'firebase/firestore';
+import { doc, setDoc, getFirestore, getDoc } from 'firebase/firestore';
 
 function Templates({shop, shopid}){
   const db = getFirestore(app);

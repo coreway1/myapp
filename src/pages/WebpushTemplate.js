@@ -1,10 +1,9 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
-import {Page, Layout, LegacyCard, Tabs, Frame, TextField, FormLayout, ContextualSaveBar, Toast, List, Form, DropZone, Banner} from '@shopify/polaris';
+import {Page, Layout, LegacyCard, Tabs, Frame, TextField, FormLayout, ContextualSaveBar, Toast} from '@shopify/polaris';
 import NavigationMenu from "../component/navigation";
 import app from "../fire-config.js";
-import { doc, setDoc, getFirestore, getDoc, deleteDoc } from 'firebase/firestore';
+import { doc, setDoc, getFirestore, getDoc } from 'firebase/firestore';
 
-// import TabsPreview from "../component/TabsPreview";
 
 function WebpushTemplate({shop, shopid}){
 
@@ -78,7 +77,7 @@ function WebpushTemplate({shop, shopid}){
     const customerRef2 = doc(db, shopid, "webpushtemplate");
     await setDoc(customerRef2, {TitleFieldValue: TitleFieldValue, Description: Description, ButtonText: ButtonText, ButtonUrl: ButtonUrl});
 
-  }, [TitleFieldValue, Description, ButtonText, ButtonUrl]);
+  }, [TitleFieldValue, Description, ButtonText, ButtonUrl, db, shopid]);
 
   const toggleToastActive = useCallback(
     () => setToastActive((toastActive) => !toastActive),
@@ -134,7 +133,7 @@ function WebpushTemplate({shop, shopid}){
       <div className="container" id="windows-notification-preview-container">
         <div className="notification-summary">
           <div className="icon">
-            <img src="https://static.backinstock.org/assets/chrome_logo-5974a6aa895594740db1e2824fad768e16cb4fa1c7ea05d862c53cf287517cbb.png" />
+            <img alt="" src="https://static.backinstock.org/assets/chrome_logo-5974a6aa895594740db1e2824fad768e16cb4fa1c7ea05d862c53cf287517cbb.png" />
           </div>
           <div className="content">
             <div className="title">
@@ -171,7 +170,7 @@ function WebpushTemplate({shop, shopid}){
     <div id="web-push-preview-container">
       <div className="container" id="android-notification-preview-container">
         <div className="header">
-          <img src="https://static.backinstock.org/assets/chrome_logo_grey-52fd08ed39939e891122d0e0752b33b5a85f6f2c241460abcb659a75b7098e58.png" />
+          <img alt="" src="https://static.backinstock.org/assets/chrome_logo_grey-52fd08ed39939e891122d0e0752b33b5a85f6f2c241460abcb659a75b7098e58.png" />
           Google Chrome • {shop} • Now
         </div>
         <div className="notification-summary">
@@ -184,7 +183,7 @@ function WebpushTemplate({shop, shopid}){
             </div>
           </div>
           <div className="icon">
-            <img src="https://static.backinstock.org/assets/chrome_logo-5974a6aa895594740db1e2824fad768e16cb4fa1c7ea05d862c53cf287517cbb.png" />
+            <img alt="" src="https://static.backinstock.org/assets/chrome_logo-5974a6aa895594740db1e2824fad768e16cb4fa1c7ea05d862c53cf287517cbb.png" />
           </div>
         </div>
         <div className="buttons">
@@ -212,7 +211,7 @@ function WebpushTemplate({shop, shopid}){
     <div id="web-push-preview-container">
       <div className="container" id="mac-notification-preview-container">
         <div className="header">
-          <img src="https://static.backinstock.org/assets/chrome_logo-5974a6aa895594740db1e2824fad768e16cb4fa1c7ea05d862c53cf287517cbb.png" />
+          <img alt="" src="https://static.backinstock.org/assets/chrome_logo-5974a6aa895594740db1e2824fad768e16cb4fa1c7ea05d862c53cf287517cbb.png" />
           GOOGLE CHROME
         </div>
         <div className="notification-summary">
@@ -226,7 +225,7 @@ function WebpushTemplate({shop, shopid}){
             </div>
           </div>
           <div className="icon">
-            <img src="https://static.backinstock.org/assets/chrome_logo-5974a6aa895594740db1e2824fad768e16cb4fa1c7ea05d862c53cf287517cbb.png" />
+            <img alt="" src="https://static.backinstock.org/assets/chrome_logo-5974a6aa895594740db1e2824fad768e16cb4fa1c7ea05d862c53cf287517cbb.png" />
           </div>
         </div>
       </div>
