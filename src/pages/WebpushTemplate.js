@@ -347,7 +347,7 @@ function WebpushTemplate({shop, shopid}){
                 </LegacyCard>
               </Layout.Section>
               <Layout.Section oneHalf>
-                <LegacyCard title="Preview" sectioned actions={[{content: 'Send test push notification', onAction:handlesendtestpushnoti}]}>
+                <LegacyCard title="Preview" sectioned>
 
                 {previewproduct && (
 previewmarkup()
