@@ -41,7 +41,7 @@ export default function Notifications({shop, shopid}) {
         formData.append('shop', shop);
         
 
-    const rawResponse = await fetch('https://app.mobivogue.com/instockalert/getnotifications.php', {
+    const rawResponse = await fetch('https://app.mobivogue.com/react-php-final/getnotifications.php', {
       method: 'POST',
       headers: {
         'Accept': 'application/json'
