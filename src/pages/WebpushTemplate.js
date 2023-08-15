@@ -1,8 +1,10 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
-import {Page, Layout, LegacyCard, Button, Frame, TextField, FormLayout, ContextualSaveBar, Toast, List, Form, DropZone, Banner} from '@shopify/polaris';
+import {Page, Layout, LegacyCard, Tabs, Frame, TextField, FormLayout, ContextualSaveBar, Toast, List, Form, DropZone, Banner} from '@shopify/polaris';
 import NavigationMenu from "../component/navigation";
 import app from "../fire-config.js";
 import { doc, setDoc, getFirestore, getDoc, deleteDoc } from 'firebase/firestore';
+
+// import TabsPreview from "../component/TabsPreview";
 
 function WebpushTemplate({shop, shopid}){
 
@@ -14,10 +16,10 @@ function WebpushTemplate({shop, shopid}){
   const db = getFirestore(app);
 
   const defaultState = useRef({
-    TitleFieldValue: '{{product.title | strip_html}} is now available',
-    Description: '{{product.title | strip_html}} is now available to order from {{shop.name}}',
+    TitleFieldValue: '{{product.title}} is now available',
+    Description: '{{product.title}} is now available to order from {{shop.name}}',
     ButtonText: 'BUY NOW',
-    ButtonUrl: '{{ variant.url }}'
+    ButtonUrl: '{{variant.url}}'
   });
   const [isDirty, setIsDirty] = useState(false);
   const [toastActive, setToastActive] = useState(false);
@@ -83,6 +85,160 @@ function WebpushTemplate({shop, shopid}){
     [],
   );
 
+  const [selected, setSelected] = useState(0);
+
+  const handleTabChange = useCallback(
+    (selectedTabIndex) => setSelected(selectedTabIndex),
+    [],
+  );
+ 
+
+  const tabs = [
+    {
+      id: 'window',
+      content: 'Window',
+      accessibilityLabel: 'Window',
+      panelID: 'window',
+    },
+    {
+      id: 'android',
+      content: 'Android',
+      panelID: 'android',
+    },
+    {
+      id: 'mac',
+      content: 'Mac',
+      panelID: 'mac',
+    }
+  ];
+
+  const raplaceAlllq = (str) => {
+    return (
+      str.replaceAll("{{product.title}}",previewproduct.node.title).replaceAll("{{shop.name}}",shopdata.name).replaceAll("{{variant.url}}",previewproduct.node.onlineStorePreviewUrl)
+    );
+  }
+
+  const previewmarkup = () => {
+    if(previewproduct){
+      return(
+        <Tabs tabs={tabs} selected={selected} onSelect={handleTabChange}>
+
+          {selected === 0 && (<>
+              <>
+    <link
+      rel="stylesheet"
+      href="https://static.backinstock.org/assets/web_push_preview-50501c80929f337ce619de70312cb1a5d91fef5e467704cbcb97ee99b6b78a86.css"
+      media="screen"
+    />
+    <div id="web-push-preview-container">
+      <div className="container" id="windows-notification-preview-container">
+        <div className="notification-summary">
+          <div className="icon">
+            <img src="https://static.backinstock.org/assets/chrome_logo-5974a6aa895594740db1e2824fad768e16cb4fa1c7ea05d862c53cf287517cbb.png" />
+          </div>
+          <div className="content">
+            <div className="title">
+            {raplaceAlllq(TitleFieldValue)}
+            </div>
+            <div className="message">
+            {raplaceAlllq(Description)}
+            </div>
+            <div className="source">Google Chrome • {shop}</div>
+          </div>
+        </div>
+        <div className="buttons">
+          <a
+            href={raplaceAlllq(ButtonUrl)}
+            rel="noopener noreferrer"
+            target="_blank"
+            type="button"
+          >
+            <div className="button">{ButtonText}</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </>
+  
+  </>)}
+          {selected === 1 && (<>
+              <>
+    <link
+      rel="stylesheet"
+      href="https://static.backinstock.org/assets/web_push_preview-50501c80929f337ce619de70312cb1a5d91fef5e467704cbcb97ee99b6b78a86.css"
+      media="screen"
+    />
+    <div id="web-push-preview-container">
+      <div className="container" id="android-notification-preview-container">
+        <div className="header">
+          <img src="https://static.backinstock.org/assets/chrome_logo_grey-52fd08ed39939e891122d0e0752b33b5a85f6f2c241460abcb659a75b7098e58.png" />
+          Google Chrome • {shop} • Now
+        </div>
+        <div className="notification-summary">
+          <div className="content">
+            <div className="title">
+            {raplaceAlllq(TitleFieldValue)}
+            </div>
+            <div className="message">
+            {raplaceAlllq(Description)}
+            </div>
+          </div>
+          <div className="icon">
+            <img src="https://static.backinstock.org/assets/chrome_logo-5974a6aa895594740db1e2824fad768e16cb4fa1c7ea05d862c53cf287517cbb.png" />
+          </div>
+        </div>
+        <div className="buttons">
+          <a
+            href={raplaceAlllq(ButtonUrl)}
+            rel="noopener noreferrer"
+            target="_blank"
+            type="button"
+          >
+            <div className="button">{ButtonText}</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </>
+  
+  </>)}
+          {selected === 2 && (<>
+              <>
+    <link
+      rel="stylesheet"
+      href="https://static.backinstock.org/assets/web_push_preview-50501c80929f337ce619de70312cb1a5d91fef5e467704cbcb97ee99b6b78a86.css"
+      media="screen"
+    />
+    <div id="web-push-preview-container">
+      <div className="container" id="mac-notification-preview-container">
+        <div className="header">
+          <img src="https://static.backinstock.org/assets/chrome_logo-5974a6aa895594740db1e2824fad768e16cb4fa1c7ea05d862c53cf287517cbb.png" />
+          GOOGLE CHROME
+        </div>
+        <div className="notification-summary">
+          <div className="content">
+            <div className="title">
+            {raplaceAlllq(TitleFieldValue)}
+            </div>
+            <div className="message">{shop}</div>
+            <div className="message">
+            {raplaceAlllq(Description)}
+            </div>
+          </div>
+          <div className="icon">
+            <img src="https://static.backinstock.org/assets/chrome_logo-5974a6aa895594740db1e2824fad768e16cb4fa1c7ea05d862c53cf287517cbb.png" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </>
+  
+  </>)}
+    </Tabs>
+      );
+    }
+  }
+
   const toastMarkup = toastActive ? (
     <Toast onDismiss={toggleToastActive} content="Changes saved" />
   ) : null;
@@ -129,6 +285,10 @@ function WebpushTemplate({shop, shopid}){
     });
     const content = await rawResponse.json();
     setpreviewproduct(content.data.products.edges[0]);
+
+
+
+
   };
 
   const getshopdata = async (shop) => {
@@ -147,52 +307,9 @@ function WebpushTemplate({shop, shopid}){
     if(shopid) getwebpushtemplate(shopid);
     if(shop) getshopdata(shop);
     if(shop) getpreviewproduct(shop);
-  }, [shopid, shop]); 
-
-
-  const previewmarkup = () => {
-    if(previewproduct){
-    return(
-    <>
-  <link
-    rel="stylesheet"
-    href="https://static.backinstock.org/assets/web_push_preview-50501c80929f337ce619de70312cb1a5d91fef5e467704cbcb97ee99b6b78a86.css"
-    media="screen"
-  />
-  <div id="web-push-preview-container">
-    <div className="container" id="windows-notification-preview-container">
-      <div className="notification-summary">
-        <div className="icon">
-          <img src="https://static.backinstock.org/assets/chrome_logo-5974a6aa895594740db1e2824fad768e16cb4fa1c7ea05d862c53cf287517cbb.png" />
-        </div>
-        <div className="content">
-          <div className="title">
-            {TitleFieldValue.raplaceAll("{{product.title}}",previewproduct.node.title)}
-          </div>
-          <div className="message">
-            {Description.raplaceAll("{{product.title}}",previewproduct.node.title).raplaceAll("{{shop.name}}",shopdata.name)}
-          </div>
-          <div className="source">Google Chrome • backinstock.org</div>
-        </div>
-      </div>
-      <div className="buttons">
-        <a
-          href={ButtonUrl.raplaceAll("{{variant.url}}",previewproduct.node.onlineStorePreviewUrl)}
-          rel="noopener noreferrer"
-          target="_blank"
-          type="button"
-        >
-          <div className="button">{ButtonText}</div>
-        </a>
-      </div>
-    </div>
   
-  </div>
-</>
 
-  );
-    }
-  }
+  }, [shopid, shop]); 
 
     return (
         <Frame navigation={<NavigationMenu path="/webpush-template" />}>
@@ -230,7 +347,11 @@ function WebpushTemplate({shop, shopid}){
               </Layout.Section>
               <Layout.Section oneHalf>
                 <LegacyCard sectioned>
-                  {previewmarkup}
+
+                  {previewmarkup()}
+
+                  {/* {previewproduct && (<TabsPreview TitleFieldValue={TitleFieldValue} Description={Description} ButtonUrl={ButtonUrl} ButtonText={ButtonText} shopdata={shopdata} previewproduct={previewproduct} />)}
+                 */}
                 </LegacyCard>
               </Layout.Section>
             </Layout>
