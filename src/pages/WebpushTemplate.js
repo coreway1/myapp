@@ -352,9 +352,6 @@ function WebpushTemplate({shop, shopid}){
 previewmarkup()
                 )}
 
-
-                  {/* {previewproduct && (<TabsPreview TitleFieldValue={TitleFieldValue} Description={Description} ButtonUrl={ButtonUrl} ButtonText={ButtonText} shopdata={shopdata} previewproduct={previewproduct} />)}
-                 */}
                 </LegacyCard>
               </Layout.Section>
             </Layout>
