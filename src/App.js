@@ -16,7 +16,7 @@ function App() {
   const [shopid, setshopid] = useState(false);
   const getshopid = async (shop) => {
     if(shop){
-      const rawResponse = await fetch('https://app.mobivogue.com/react-php-final/getshopid.php?shop='+shop, {
+      const rawResponse = await fetch('https://app.mobivogue.com/instockalert/getshopid.php?shop='+shop, {
         method: 'GET',
         headers: {
           'Accept': 'application/json'
