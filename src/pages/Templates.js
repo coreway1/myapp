@@ -837,6 +837,12 @@ function Templates({shop, shopid}){
                                   }
                                 }
 
+
+                                const handlesendtestpushnoti = () =>{
+                                  console.log("pushhhhhhhhhhhhhhhhhhhhhhhhhh");
+                                  }
+
+
     return (
         <Frame navigation={<NavigationMenu path="/templates" />}>
           <Page title="Email Template" fullWidth>
@@ -1000,7 +1006,7 @@ function Templates({shop, shopid}){
             
               </Layout.Section>
               <Layout.Section oneHalf>
-                <LegacyCard sectioned>
+                <LegacyCard sectioned title="Preview" actions={[{content: 'Send test email', onAction:handlesendtestpushnoti}]}>
                   {previewmarkup()}
                 </LegacyCard>
               </Layout.Section>

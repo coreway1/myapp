@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
-import {Page, Layout, LegacyCard, Tabs, Frame, TextField, FormLayout, ContextualSaveBar, Toast} from '@shopify/polaris';
+import {Page, Layout, LegacyCard, Tabs, Frame, TextField, FormLayout, ContextualSaveBar, Toast, Button} from '@shopify/polaris';
 import NavigationMenu from "../component/navigation";
 import app from "../fire-config.js";
 import { doc, setDoc, getFirestore, getDoc } from 'firebase/firestore';
@@ -306,9 +306,11 @@ function WebpushTemplate({shop, shopid}){
     if(shopid) getwebpushtemplate(shopid);
     if(shop) getshopdata(shop);
     if(shop) getpreviewproduct(shop);
-  
-
   }, [shopid, shop]); 
+
+  const handlesendtestpushnoti = () =>{
+  console.log("pushhhhhhhhhhhhhhhhhhhhhhhhhh");
+  }
 
     return (
         <Frame navigation={<NavigationMenu path="/webpush-template" />}>
@@ -345,7 +347,7 @@ function WebpushTemplate({shop, shopid}){
                 </LegacyCard>
               </Layout.Section>
               <Layout.Section oneHalf>
-                <LegacyCard sectioned>
+                <LegacyCard title="Preview" sectioned actions={[{content: 'Send test push notification', onAction:handlesendtestpushnoti}]}>
 
                 {previewproduct && (
 previewmarkup()
