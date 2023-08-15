@@ -5,18 +5,23 @@ import app from "../fire-config.js";
 import { doc, setDoc, getFirestore, getDoc, deleteDoc } from 'firebase/firestore';
 import { useState, useCallback, useEffect, useRef } from 'react';
 
- function Linechart() {
+ function Linechart({shopid}) {
   const db = getFirestore(app);
 
+  const [Notifications, setNotifications] = useState([]);
+
   const getanalytics = async (shopid) =>{
-    const docRef = doc(db, shopid, "analytics");
+    const docRef = doc(db, shopid, "Notificationsanalytics");
     const docSnap = await getDoc(docRef);
     var data = docSnap.data() ? docSnap.data().data : [];
+
+    setNotifications(data);
   };
 
+
   useEffect(() => {
-    getanalytics("61718233334");
-  }, []); 
+    if(shopid) getanalytics(shopid);
+  }, [shopid]); 
 
 
 return(

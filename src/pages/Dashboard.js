@@ -94,7 +94,7 @@ function Dashboard({shop, shopid}) {
           <Layout.Section >
             <LegacyCard title="" actions={[{content: 'Manage'}]}>
               <LegacyCard.Section>
-                <Linechart />
+                <Linechart shopid={shopid} />
               </LegacyCard.Section>
             </LegacyCard>
           </Layout.Section>
