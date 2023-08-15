@@ -5,6 +5,12 @@ import app from "../fire-config.js";
 import { doc, setDoc, getFirestore, getDoc, deleteDoc } from 'firebase/firestore';
 
 function WebpushTemplate({shop, shopid}){
+
+
+  const [previewproduct, setpreviewproduct] = useState(false);
+  const [shopdata, setshopdata] = useState(false);
+
+
   const db = getFirestore(app);
 
   const defaultState = useRef({
@@ -114,11 +120,39 @@ function WebpushTemplate({shop, shopid}){
     }
   };
 
+  const getpreviewproduct = async (shop) => {
+    const rawResponse = await fetch('https://app.mobivogue.com/react-php-final/getpreviewproduct.php?shop='+shop, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+    const content = await rawResponse.json();
+    setpreviewproduct(content.data.products.edges[0]);
+  };
+
+  const getshopdata = async (shop) => {
+    const rawResponse = await fetch('https://app.mobivogue.com/react-php-final/getshopdata.php?shop='+shop, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+    const content = await rawResponse.json();
+    setshopdata(content.data.shop);
+  };
+
+
   useEffect(() => {
     if(shopid) getwebpushtemplate(shopid);
-  }, [shopid]); 
+    if(shop) getshopdata(shop);
+    if(shop) getpreviewproduct(shop);
+  }, [shopid, shop]); 
 
-  const previewmarkup = (
+
+  const previewmarkup = () => {
+    if(previewproduct){
+    return(
     <>
   <link
     rel="stylesheet"
@@ -133,17 +167,17 @@ function WebpushTemplate({shop, shopid}){
         </div>
         <div className="content">
           <div className="title">
-            {TitleFieldValue}
+            {TitleFieldValue.raplaceAll("{{product.title}}",previewproduct.node.title)}
           </div>
           <div className="message">
-            {Description}
+            {Description.raplaceAll("{{product.title}}",previewproduct.node.title).raplaceAll("{{shop.name}}",shopdata.name)}
           </div>
           <div className="source">Google Chrome • backinstock.org</div>
         </div>
       </div>
       <div className="buttons">
         <a
-          href={ButtonUrl}
+          href={ButtonUrl.raplaceAll("{{variant.url}}",previewproduct.node.onlineStorePreviewUrl)}
           rel="noopener noreferrer"
           target="_blank"
           type="button"
@@ -157,6 +191,8 @@ function WebpushTemplate({shop, shopid}){
 </>
 
   );
+    }
+  }
 
     return (
         <Frame navigation={<NavigationMenu path="/webpush-template" />}>

@@ -8,22 +8,23 @@ function Templates({shop, shopid}){
   const db = getFirestore(app);
 
   const defaultState = useRef({
-    subjectFieldValue: '{{product.title | strip_html}} is now available to order from {{shop.name}}',
-    fromemailField: 'p@gmail.com',
+    subjectFieldValue: '',
+    fromemailField: '',
     LogoFieldValue: '',
     HeadingFieldValue: '',
     HeadingFieldTextColor: '',
     BodyFieldTextColor: '',
     LinkFieldTextColor: '',
-    ContentFieldText: 'You asked us to tell you when {{product.title}} {{variant.title}} would be available to purchase.We are pleased to tell you it is now available.Click below to place your order.',
+    ContentFieldText: '',
     BuyButtonFieldTextColor: '',
     BuyButtonFieldBackgroundColor: '',
-    BuyButtonFieldText: 'BUY NOW',
+    BuyButtonFieldText: '',
     FooterFieldTextColor: '',
     FooterLinkFieldTextColor: '',
-    FooterContentFieldText: 'You are receiving this email because you requested a back in stock notification on <a href="{{variant.url }}" style="color: {{ link_color }} !important; text-decoration: none;">{{ shop.name }}</a>.{{ shop.name }} {{ shop.address1 }}, {{ shop.city }} {{ shop.zip }}, {{ shop.country }}<a href="{{ customer.unsubscribe_url }}">Manage your notifications</a>'
+    FooterContentFieldText: ''
   });
-  const [previewproduct, setpreviewproduct] = useState([]);
+  const [previewproduct, setpreviewproduct] = useState(false);
+  const [shopdata, setshopdata] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
 
   
@@ -292,12 +293,22 @@ function Templates({shop, shopid}){
 
   };
 
+  const getshopdata = async (shop) => {
+
+    const rawResponse = await fetch('https://app.mobivogue.com/react-php-final/getshopdata.php?shop='+shop, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+    const content = await rawResponse.json();
+    setshopdata(content.data.shop);
+  };
+
   useEffect(() => {
     if(shopid) getemailtemplate(shopid);
+    if(shop) getshopdata(shop);
     if(shop) getpreviewproduct(shop);
-
-    console.log(previewproduct.node.title);
-
   }, [shopid, shop]); 
 
 
@@ -338,7 +349,9 @@ function Templates({shop, shopid}){
       src={typeof file === "string" ? file : window.URL.createObjectURL(file)}
     />
   );
-  const previewmarkup = (
+  const previewmarkup = () => {
+    if(previewproduct){
+      return(
     <>
   <title />
   <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
@@ -410,11 +423,11 @@ function Templates({shop, shopid}){
                                     fontFamily: '"Lato", Arial, sans-serif',
                                     fontSize: "12px",
                                     lineHeight: "18px",
-                                    color: "#888888",
+                                    color: LinkFieldTextColor,
                                     textDecoration: "none"
                                   }}
                                 >
-                                  {subjectFieldValue.replace("{{product.title}}",previewproduct.node.title).replace("{{shop.name}}",shop)}
+                                  {subjectFieldValue.replaceAll("{{product.title}}",previewproduct.node.title).replaceAll("{{shop.name}}",shopdata.name)}
                         
                                   <br className="em_hide1" />
                                   <a
@@ -422,7 +435,7 @@ function Templates({shop, shopid}){
                                     target="_blank"
                                     style={{
                                       whiteSpace: "nowrap",
-                                      color: "#888888",
+                                      color: LinkFieldTextColor,
                                       textDecoration: "underline"
                                     }}
                                   >
@@ -469,10 +482,10 @@ function Templates({shop, shopid}){
                                     style={{ textDecoration: "none" }}
                                   >
                                     <img
-                                      src=""
-                                      alt=""
-                                      width=""
-                                      height=""
+                                      src={file}
+                                      alt={shop}
+                                      width="100"
+                                      height="100"
                                       style={{
                                         display: "block",
                                         border: "none",
@@ -492,12 +505,12 @@ function Templates({shop, shopid}){
                                     fontFamily: '"Lato", Arial, sans-serif',
                                     fontSize: "32px",
                                     lineHeight: "37px",
-                                    color: "#000",
+                                    color: HeadingFieldTextColor,
                                     textDecoration: "none",
                                     fontWeight: "bold"
                                   }}
                                 >
-                                   {HeadingFieldValue.replace("{{product.title}}",previewproduct.node.title).replace("{{variant.title}}",previewproduct.node.variants.edges[0].node.title).replace("{{shop.name}}",shop)}
+                                   {HeadingFieldValue.replaceAll("{{product.title}}",previewproduct.node.title).replaceAll("{{variant.title}}",previewproduct.node.variants.edges[0].node.title).replaceAll("{{shop.name}}",shopdata.name)}
                         
                                 </td>
                               </tr>
@@ -558,11 +571,11 @@ function Templates({shop, shopid}){
                                     fontFamily: '"Lato", Arial, sans-serif',
                                     fontSize: "19px",
                                     lineHeight: "24px",
-                                    color: "#333",
+                                    color: BodyFieldTextColor,
                                     textDecoration: "none"
                                   }}
                                 >
-                                {ContentFieldText.replace("{{product.title}}",previewproduct.node.title).replace("{{variant.title}}",previewproduct.node.variants.edges[0].node.title)}
+                                {ContentFieldText.replaceAll("{{product.title}}",previewproduct.node.title).replaceAll("{{variant.title}}",previewproduct.node.variants.edges[0].node.title)}
                         
                                 </td>
                               </tr>
@@ -618,14 +631,14 @@ function Templates({shop, shopid}){
                                                 <td
                                                   align="center"
                                                   valign="middle"
-                                                  bgcolor="#222222 "
+                                                  bgcolor={BuyButtonFieldBackgroundColor}
                                                 >
                                                   <table
                                                     width="100%"
                                                     border={0}
                                                     cellSpacing={0}
                                                     cellPadding={0}
-                                                    bgcolor="#222222 "
+                                                    bgcolor={BuyButtonFieldBackgroundColor}
                                                   >
                                                     <tbody>
                                                       <tr>
@@ -637,8 +650,7 @@ function Templates({shop, shopid}){
                                                             fontFamily:
                                                               '"Lato", Arial, sans-serif',
                                                             fontSize: 27,
-                                                            backgroundColor:
-                                                              "#222222",
+                                                            backgroundColor:BuyButtonFieldBackgroundColor,
                                                             textDecoration:
                                                               "none",
                                                             letterSpacing: 1
@@ -763,30 +775,14 @@ function Templates({shop, shopid}){
                                     fontFamily: "Arial, sans-serif",
                                     fontSize: "16px",
                                     lineHeight: "24px",
-                                    color: "#aaa",
+                                    color: FooterContentFieldText,
                                     textDecoration: "none"
                                   }}
                                 >
-                                  {FooterContentFieldText.replace("{{variant.url}}",previewproduct.node.onlineStorePreviewUrl).replace("{{link_color}}",FooterLinkFieldTextColor).replace("{{shop.name}}",shop)}
+                                  {FooterContentFieldText.replaceAll("{{variant.url}}",previewproduct.node.onlineStorePreviewUrl).replaceAll("{{link_color}}",FooterLinkFieldTextColor).replaceAll("{{shop.name}}",shopdata.name).replaceAll("{{shop.address1}}",shopdata.billingAddress.address1).replaceAll("{{shop.city}}",shopdata.billingAddress.city).replaceAll("{{shop.zip}}",shopdata.billingAddress.zip).replaceAll("{{shop.country}}",shopdata.billingAddress.country)}
                         
-                                  <a
-                                    href={previewproduct.node.onlineStorePreviewUrl}
-                                    style={{
-                                      color: "!important",
-                                      textDecoration: "none"
-                                    }}
-                                  >
-                                    {shop}
-                                  </a>
-                                  .<br />
-                                  {shop} 301 Aaron, Ahmedabad 380009,
-                                  IN
-                                  <br />
-                                  <br />
-                                  <a href="%recipient.unsubscribe_url%">
-                                    Manage your notifications
-                                  </a>
-                                  <br />
+                                
+                               
                                 </td>
                               </tr>
                               <tr>
@@ -838,6 +834,8 @@ function Templates({shop, shopid}){
 </>
 
   );
+                                  }
+                                }
 
     return (
         <Frame navigation={<NavigationMenu path="/templates" />}>
@@ -1003,7 +1001,7 @@ function Templates({shop, shopid}){
               </Layout.Section>
               <Layout.Section oneHalf>
                 <LegacyCard sectioned>
-                  {previewmarkup}
+                  {previewmarkup()}
                 </LegacyCard>
               </Layout.Section>
             </Layout>
