@@ -348,7 +348,10 @@ function WebpushTemplate({shop, shopid}){
               <Layout.Section oneHalf>
                 <LegacyCard sectioned>
 
-                  {previewmarkup()}
+                {previewproduct && (
+previewmarkup()
+                )}
+
 
                   {/* {previewproduct && (<TabsPreview TitleFieldValue={TitleFieldValue} Description={Description} ButtonUrl={ButtonUrl} ButtonText={ButtonText} shopdata={shopdata} previewproduct={previewproduct} />)}
                  */}
