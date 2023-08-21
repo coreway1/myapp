@@ -14,6 +14,8 @@ import './App.css';
 function App() {
 
   const [shopid, setshopid] = useState(false);
+  const [installeddate, setinstalleddate] = useState(false);
+  
   const getshopid = async (shop) => {
     if(shop){
       const rawResponse = await fetch('https://app.mobivogue.com/react-php-final/getshopid.php?shop='+shop, {
@@ -24,6 +26,7 @@ function App() {
       });
       const content = await rawResponse.json();
       setshopid(content.shopid);
+      setinstalleddate(content.installeddate);
     }
   };
   
@@ -37,7 +40,7 @@ function App() {
       <Routes>
 
 
-<Route exact path={`/`} element={< Dashboard shop={new URLSearchParams(window.location.search).get('shop')} shopid={shopid} />}></Route>
+<Route exact path={`/`} element={< Dashboard shop={new URLSearchParams(window.location.search).get('shop')} shopid={shopid} installeddate={installeddate} />}></Route>
                 <Route exact path={`/notifications`} element={< Notifications shop={new URLSearchParams(window.location.search).get('shop')} shopid={shopid} />}></Route>
                 <Route path={`/notifications/:id`} element={<Notificationsview shop={new URLSearchParams(window.location.search).get('shop')} shopid={shopid} />} />
                 <Route exact path={`/webpush-notifications`} element={< WebpushNotifications shop={new URLSearchParams(window.location.search).get('shop')} shopid={shopid} />}></Route>

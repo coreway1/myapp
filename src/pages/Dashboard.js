@@ -4,7 +4,7 @@ import {
   Layout,
   LegacyCard,
   Text,
-  Frame
+  Frame,
 } from '@shopify/polaris';
 import NavigationMenu from "../component/navigation";
 import Linechart from "../component/Linechart";
@@ -13,40 +13,50 @@ import app from "../fire-config.js";
 import { doc, getFirestore, getDoc } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
 
-function Dashboard({shop, shopid}) {
+function Dashboard({shop, shopid, installeddate}) {
   const db = getFirestore(app);
 
   const [totlanotifi, settotlanotifi] = useState(0);
   const [totlanotifisent, settotlanotifisent] = useState(0);
   const [ordervalue, setordervalue] = useState(0);
+
+
+  const arrayColumn = (arr, n) => arr.map(x => x[n]);
   
 
   const gettotalnotifications = async (shopid) => {
 
 
-    const docRef = doc(db, shopid, "notifications");
+    const docRef = doc(db, shopid, "Notificationsanalytics");
     const docSnap = await getDoc(docRef);
-    var data = docSnap.data() ? docSnap.data().data : {};
-    const totalemails = Object.keys(data).length;
+    var data = docSnap.data() ? docSnap.data().data : [];
 
-    const docRef2 = doc(db, shopid, "webpush");
-    const docSnap2 = await getDoc(docRef2);
-    var data2 = docSnap2.data() ? docSnap2.data().data : {};
-    const totalwebpush = Object.keys(data2).length;
+    var valueess1 = arrayColumn(data, "value");
+    var numberArray1 = valueess1.map(Number);
+    const sum1 = numberArray1.reduce((partialSum, a) => partialSum + a, 0);
 
-    settotlanotifi((totalemails+totalwebpush));
+    settotlanotifi(sum1);
 
-    const docRef22 = doc(db, shopid, "notificationssent");
+    const docRef22 = doc(db, shopid, "Notificationssentanalytics");
     const docSnap22 = await getDoc(docRef22);
-    var data22 = docSnap22.data() ? docSnap22.data() : {notificationssent: 0};
+    var data22 = docSnap22.data() ? docSnap22.data().data : [];
 
-    settotlanotifisent(data22.notificationssent);
+    
+    var valueess11 = arrayColumn(data22, "value");
+    var numberArray11 = valueess11.map(Number);
+    const sum11 = numberArray11.reduce((partialSum, a) => partialSum + a, 0);
 
-    const docRef222 = doc(db, shopid, "ordervalue");
+    settotlanotifisent(sum11);
+
+    const docRef222 = doc(db, shopid, "Ordersanalytics");
     const docSnap222 = await getDoc(docRef222);
-    var data22 = docSnap222.data() ? docSnap222.data() : {ordervalue: 0};
+    var data222 = docSnap222.data() ? docSnap222.data().data : [];
 
-    setordervalue(data22.ordervalue);
+    var valueess111 = arrayColumn(data222, "value");
+    var numberArray111 = valueess111.map(Number);
+    const sum111 = numberArray111.reduce((partialSum, a) => partialSum + a, 0);
+
+    setordervalue(sum111);
 
     
 
@@ -92,9 +102,9 @@ function Dashboard({shop, shopid}) {
             </LegacyCard>
           </Layout.Section>
           <Layout.Section >
-            <LegacyCard title="" actions={[{content: 'Manage'}]}>
+            <LegacyCard>
               <LegacyCard.Section>
-                <Linechart shopid={shopid} />
+                <Linechart shopid={shopid} installeddate={installeddate} />
               </LegacyCard.Section>
             </LegacyCard>
           </Layout.Section>

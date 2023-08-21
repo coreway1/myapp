@@ -1,9 +1,7 @@
 // import {PolarisVizProvider, SparkBarChart, SparkLineChart, BarChart, LineChart, BarChart} from '@shopify/polaris-viz';
 // import '@shopify/polaris-viz/build/esm/styles.css';
 
-// import app from "../fire-config.js";
-// import { doc, setDoc, getFirestore, getDoc, deleteDoc } from 'firebase/firestore';
-// import { useState, useCallback, useEffect, useRef } from 'react';
+
 
 //  function Linechart({shopid}) {
 //   const db = getFirestore(app);
@@ -123,13 +121,21 @@ import { DatePicker, Button, Popover, LegacyCard } from "@shopify/polaris";
 import { useState, useCallback, useEffect, useRef } from "react";
 import { PolarisVizProvider, BarChart, LineChart } from "@shopify/polaris-viz";
 import "@shopify/polaris-viz/build/esm/styles.css";
+import app from "../fire-config.js";
+import { doc, setDoc, getFirestore, getDoc, deleteDoc } from 'firebase/firestore';
 
-function Linechart() {
+function Linechart({shopid,installeddate}) {
+    const db = getFirestore(app);
+    const notidataref = useRef([]);
+    const notisentdataref = useRef([]);
+    const orderdataref = useRef([]);
 
-    const dataref = useRef([]);
-
+    const [state, setstate] = useState("Loading");
     const [popoverActive, setPopoverActive] = useState(false);
     const [notificationsdata, setnotificationsdata] = useState([]);
+    const [notificationssentdata, setnotificationssentdata] = useState([]);
+    const [orderdata, setorderdata] = useState([]);
+
     const [{ month, year }, setDate] = useState({
         month: new Date().getMonth(),
         year: new Date().getFullYear()
@@ -156,8 +162,6 @@ function Linechart() {
       />
       );
 
-
-
       const togglePopoverActive = useCallback(
         () => setPopoverActive((popoverActive) => !popoverActive),
         [],
@@ -179,17 +183,19 @@ function Linechart() {
         return dateArray;
       };
 
-      const getanalyticdata = async () => {
-        const dates = dateRange('2023-01-1', new Date());
+      const getanalyticdatanoti = async (installeddate) => {
+        const dates = dateRange(installeddate, new Date());
         const arrayColumn = (arr, n) => arr.map(x => x[n]);
-        var notifiarray = [
-            { value: 50, key: "Tue Aug 01 2023" },
-            { value: 99, key: "Wed Aug 02 2023" },
-            { value: 10, key: "Tue Aug 15 2023" }
-          ];
+
+        const docRef = doc(db, shopid, "Notificationsanalytics");
+        const docSnap = await getDoc(docRef);
+        var notifiarray = docSnap.data() ? docSnap.data().data : [];
+
         var comparray = arrayColumn(notifiarray, "key");
         dates.map(function (val, index) {
-           comparray.indexOf(val) === -1 ? notifiarray.push({value: Math.floor(Math.random() * 100), key: val}):'';
+           if(comparray.indexOf(val) === -1){
+              notifiarray.push({value: 0, key: val})
+           }
         });
         notifiarray.sort(function(a, b) {
           var keyA = new Date(a.key),
@@ -198,37 +204,117 @@ function Linechart() {
           if (keyA > keyB) return 1;
           return 0;
         });
-        // setnotificationsdata(notifiarray);
 
-        dataref.current = notifiarray;
+        notidataref.current = notifiarray;
 
         handledatesubmit();
       };
-      
-      useEffect(() => {
-        getanalyticdata();
-      }, []);
+
+      const getanalyticdatanotisent = async (installeddate) => {
+        const dates = dateRange(installeddate, new Date());
+        const arrayColumn = (arr, n) => arr.map(x => x[n]);
+
+        const docRef = doc(db, shopid, "Notificationssentanalytics");
+        const docSnap = await getDoc(docRef);
+        var notifiarray = docSnap.data() ? docSnap.data().data : [];
+
+        var comparray = arrayColumn(notifiarray, "key");
+        dates.map(function (val, index) {
+           if(comparray.indexOf(val) === -1){
+              notifiarray.push({value: 0, key: val})
+           }
+        });
+        notifiarray.sort(function(a, b) {
+          var keyA = new Date(a.key),
+            keyB = new Date(b.key);
+          if (keyA < keyB) return -1;
+          if (keyA > keyB) return 1;
+          return 0;
+        });
+
+        notisentdataref.current = notifiarray;
+
+        handledatesubmit();
+      };
+
+      const getanalyticdataorder = async (installeddate) => {
+        const dates = dateRange(installeddate, new Date());
+        const arrayColumn = (arr, n) => arr.map(x => x[n]);
+
+        const docRef = doc(db, shopid, "Ordersanalytics");
+        const docSnap = await getDoc(docRef);
+        var notifiarray = docSnap.data() ? docSnap.data().data : [];
+
+        var comparray = arrayColumn(notifiarray, "key");
+        dates.map(function (val, index) {
+           if(comparray.indexOf(val) === -1){
+              notifiarray.push({value: 0, key: val})
+           }
+        });
+        notifiarray.sort(function(a, b) {
+          var keyA = new Date(a.key),
+            keyB = new Date(b.key);
+          if (keyA < keyB) return -1;
+          if (keyA > keyB) return 1;
+          return 0;
+        });
+
+        orderdataref.current = notifiarray;
+
+        handledatesubmit();
+      };
 
       const handledatesubmit = () =>{
-   
-        let absolute = dataref.current.filter(function(item){
+        setstate("Loading");
+        let absolute = notidataref.current.filter(function(item){
             if(selectedDates.start <= new Date(item.key) && selectedDates.end >= new Date(item.key)){
                 return item;
             }
-          });
-          setnotificationsdata(absolute);
+        });
+
+        setnotificationsdata(absolute);
+
+        let absolute2 = notisentdataref.current.filter(function(item){
+          if(selectedDates.start <= new Date(item.key) && selectedDates.end >= new Date(item.key)){
+              return item;
+          }
+      });
+
+      setnotificationssentdata(absolute2);
+
+      let absolute3 = orderdataref.current.filter(function(item){
+        if(selectedDates.start <= new Date(item.key) && selectedDates.end >= new Date(item.key)){
+            return item;
+        }
+    });
+
+    
+    setorderdata(absolute3);
+
+
+
           setPopoverActive(false);
+          setstate("Success");
       };
+      
+      useEffect(() => {
+        if(installeddate) getanalyticdatanoti(installeddate);
+        if(installeddate) getanalyticdatanotisent(installeddate);
+        if(installeddate) getanalyticdataorder(installeddate);
+      }, [installeddate]);
+
+     
 
 
     return (
-        <div style={{height: '300px'}}>
+        <div >
         
         <Popover
         active={popoverActive}
         activator={activator}
         autofocusTarget="first-node"
         onClose={togglePopoverActive}
+        preferredAlignment="left"
       >
         <Popover.Pane>
         <LegacyCard sectioned>
@@ -252,11 +338,19 @@ function Linechart() {
             {
               name: "Notifications",
               data: notificationsdata
+            },
+            {
+              name: "Notifications sent",
+              data: notificationssentdata
+            },
+            {
+              name: "Order value",
+              data: orderdata
             }
         ]}
           theme="Light"
           isAnimated
-          state="Success"
+          state={state}
         />
 
         </PolarisVizProvider>
