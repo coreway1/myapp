@@ -1,0 +1,26 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+name = "stable-sale-app"
+client_id = "97a4ed44e77978076371beb6016a6a36"
+application_url = "https://app.mobivogue.com/react-php-final"
+embedded = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "read_products,read_inventory,read_orders"
+use_legacy_install_flow = true
+
+[auth]
+redirect_urls = [
+  "https://app.mobivogue.com/react-php-final/generate_token.php",
+  "https://app.mobivogue.com/react-php-final/install.php"
+]
+
+[webhooks]
+api_version = "2023-07"
+
+[pos]
+embedded = false
+
+[build]
+dev_store_url = "products-fileds.myshopify.com"

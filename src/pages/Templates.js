@@ -26,6 +26,7 @@ function Templates({shop, shopid}){
   const [previewproduct, setpreviewproduct] = useState(false);
   const [shopdata, setshopdata] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
+  const [content, setcontent] = useState("Changes saved");
 
   
 
@@ -204,11 +205,11 @@ function Templates({shop, shopid}){
     defaultState.current.FooterLinkFieldTextColor = FooterLinkFieldTextColor;
     defaultState.current.FooterContentFieldText = FooterContentFieldText;
     
-    
+    setcontent("Changes saved");
     setIsDirty(false);
     setToastActive(true);
     const customerRef2 = doc(db, shopid, "emailtemplate");
-    await setDoc(customerRef2, {subjectFieldValue: subjectFieldValue, fromemailField: fromemailField, LogoFieldValue: await Main(), HeadingFieldValue: HeadingFieldValue, HeadingFieldTextColor: HeadingFieldTextColor, BodyFieldTextColor: BodyFieldTextColor, LinkFieldTextColor: LinkFieldTextColor, ContentFieldText: ContentFieldText, BuyButtonFieldTextColor: BuyButtonFieldTextColor, BuyButtonFieldBackgroundColor: BuyButtonFieldBackgroundColor, BuyButtonFieldText: BuyButtonFieldText, FooterFieldTextColor: FooterFieldTextColor, FooterLinkFieldTextColor: FooterLinkFieldTextColor, FooterContentFieldText: FooterContentFieldText});
+    await setDoc(customerRef2, {subjectFieldValue: subjectFieldValue, fromemailField: fromemailField, LogoFieldValue: '', HeadingFieldValue: HeadingFieldValue, HeadingFieldTextColor: HeadingFieldTextColor, BodyFieldTextColor: BodyFieldTextColor, LinkFieldTextColor: LinkFieldTextColor, ContentFieldText: ContentFieldText, BuyButtonFieldTextColor: BuyButtonFieldTextColor, BuyButtonFieldBackgroundColor: BuyButtonFieldBackgroundColor, BuyButtonFieldText: BuyButtonFieldText, FooterFieldTextColor: FooterFieldTextColor, FooterLinkFieldTextColor: FooterLinkFieldTextColor, FooterContentFieldText: FooterContentFieldText});
 
   }, [subjectFieldValue, fromemailField, file, HeadingFieldValue, HeadingFieldTextColor, BodyFieldTextColor, LinkFieldTextColor, ContentFieldText, BuyButtonFieldTextColor, BuyButtonFieldBackgroundColor, BuyButtonFieldText, FooterFieldTextColor, FooterLinkFieldTextColor, FooterContentFieldText]);
 
@@ -218,7 +219,7 @@ function Templates({shop, shopid}){
   );
 
   const toastMarkup = toastActive ? (
-    <Toast onDismiss={toggleToastActive} content="Changes saved" />
+    <Toast onDismiss={toggleToastActive} content={content} />
   ) : null;
 
   const contextualSaveBarMarkup = isDirty ? (
@@ -289,7 +290,7 @@ function Templates({shop, shopid}){
       }
     });
     const content = await rawResponse.json();
-    setpreviewproduct(content.data.products.edges[0]);
+    setpreviewproduct(content.data.products.edges[0].node);
 
   };
 
@@ -304,6 +305,11 @@ function Templates({shop, shopid}){
     const content = await rawResponse.json();
     setshopdata(content.data.shop);
   };
+
+  const strreplacefun = (str) =>{
+    return str.replaceAll("{{product.title}}",previewproduct.title).replaceAll("{{shop.name}}",shopdata.name).replaceAll("{{variant.title}}",previewproduct.variants.edges[0].node.title).replaceAll("{{variant.url}}",previewproduct.onlineStorePreviewUrl).replaceAll("{{link_color}}",LinkFieldTextColor).replaceAll("{{shop.address1}}",shopdata.billingAddress.address1).replaceAll("{{shop.city}}",shopdata.billingAddress.city).replaceAll("{{shop.zip}}",shopdata.billingAddress.zip).replaceAll("{{shop.country}}",shopdata.billingAddress.country);
+    };
+
 
   useEffect(() => {
     if(shopid) getemailtemplate(shopid);
@@ -350,9 +356,10 @@ function Templates({shop, shopid}){
     />
   );
   const previewmarkup = () => {
-    if(previewproduct){
+    if(previewproduct && shopdata){
       return(
     <>
+  <>
   <title />
   <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
   <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -368,7 +375,7 @@ function Templates({shop, shopid}){
     type="text/css"
     dangerouslySetInnerHTML={{
       __html:
-        "\n    body {\n      margin: 0 !important;\n      padding: 0 !important;\n      -webkit-text-size-adjust: 100% !important;\n      -ms-text-size-adjust: 100% !important;\n      -webkit-font-smoothing: antialiased !important;\n    }\n\n    img {\n      border: 0 !important;\n      outline: none !important;\n    }\n\n    p {\n      margin: 0px !important;\n      padding: 0px !important;\n    }\n\n    table {\n      border-collapse: collapse;\n      mso-table-lspace: 0px;\n      mso-table-rspace: 0px;\n    }\n\n    td, a, span {\n      border-collapse: collapse;\n      mso-line-height-rule: exactly;\n    }\n\n    .ExternalClass * {\n      line-height: 100%;\n    }\n\n    .em_defaultlink a {\n      color: inherit !important;\n      text-decoration: none !important;\n    }\n\n    span.MsoHyperlink {\n      mso-style-priority: 99;\n      color: inherit;\n    }\n\n    span.MsoHyperlinkFollowed {\n      mso-style-priority: 99;\n      color: inherit;\n    }\n\n    .em_header {\n      font-family: 'Lato', Arial, sans-serif;\n      font-size: 12px;\n      color: #888888;\n      text-decoration: none;\n    }\n\n    .em_header a {\n      color: #888888;\n      text-decoration: underline;\n    }\n\n    .em_text1 {\n      font-family: 'Lato', Arial, sans-serif;\n      font-size: 32px;\n      line-height: 37px;\n      color: #000;\n      text-decoration: none;\n      font-weight: bold;\n    }\n\n    .em_text2 {\n      font-family: 'Lato', Arial, sans-serif;\n      font-size: 19px;\n      line-height: 24px;\n      color: #333;\n      text-decoration: none;\n    }\n\n    .em_price_rules_text {\n      font-family: 'Lato', Arial, sans-serif;\n      font-size: 17px;\n      line-height: 24px;\n      color: ;\n      text-decoration: none;\n    }\n\n    .em_footer {\n      font-family: Arial, sans-serif;\n      font-size: 16px;\n      line-height: 24px;\n      color: #aaa;\n      text-decoration: none;\n    }\n\n    .em_footer a {\n      color: #777777;\n      text-decoration: underline;\n      white-space: nowrap;\n    }\n\n    .em_btn {\n      font-family: 'Lato', Arial, sans-serif;\n      font-size: 27px;\n      background-color: #222222;\n      text-decoration: none;\n      letter-spacing: 1px;\n    }\n\n    .em_btn a {\n      color: white;\n      text-decoration: none;\n    }\n\n    /*Stylesheet for the devices width between 481px to 599px*/\n    @media only screen and (min-width:481px) and (max-width:599px) {\n      .em_main_table {\n        width: 100% !important;\n      }\n\n      .em_wrapper {\n        width: 100% !important;\n      }\n\n      .em_side {\n        width: 10px !important;\n      }\n\n      .em_hide {\n        display: none !important;\n      }\n\n      .em_full_img {\n        width: 100% !important;\n        height: auto !important;\n      }\n\n      .em_center {\n        text-align: center !important;\n      }\n\n      .em_height {\n        height: 25px !important;\n      }\n\n      .em_gap_bottom {\n        padding-bottom: 20px !important;\n      }\n\n      .em_text1 {\n        font-size: 28px !important;\n        line-height: 30px !important;\n      }\n    }\n\n    /*Stylesheet for the devices width between 0px to 480px*/\n    @media only screen and (max-width:480px) {\n      .em_main_table {\n        width: 100% !important;\n      }\n\n      .em_wrapper {\n        width: 100% !important;\n      }\n\n      .em_side {\n        width: 10px !important;\n      }\n\n      .em_hide {\n        display: none !important;\n      }\n\n      .em_hide1 {\n        display: none !important;\n      }\n\n      .em_full_img {\n        width: 100% !important;\n        height: auto !important;\n      }\n\n      .em_center {\n        text-align: center !important;\n      }\n\n      .em_height {\n        height: 25px !important;\n      }\n\n      .em_gap_bottom {\n        padding-bottom: 20px !important;\n      }\n\n      .em_text1 {\n        font-size: 28px !important;\n        line-height: 30px !important;\n      }\n\n      .em_width {\n        width: 34px !important;\n        height: auto !important;\n      }\n\n      .em_footer {\n        font-size: 15px !important;\n        line-height: 23px !important;\n      }\n\n      .em_btn a {\n        text-decoration: none !important;\n      }\n    }\n  "
+        '\n    body {\n      margin: 0 !important;\n      padding: 0 !important;\n      -webkit-text-size-adjust: 100% !important;\n      -ms-text-size-adjust: 100% !important;\n      -webkit-font-smoothing: antialiased !important;\n    }\n\n    img {\n      border: 0 !important;\n      outline: none !important;\n    }\n\n    p {\n      margin: 0px !important;\n      padding: 0px !important;\n    }\n\n    table {\n      border-collapse: collapse;\n      mso-table-lspace: 0px;\n      mso-table-rspace: 0px;\n    }\n\n    td, a, span {\n      border-collapse: collapse;\n      mso-line-height-rule: exactly;\n    }\n\n    .ExternalClass * {\n      line-height: 100%;\n    }\n\n    .em_defaultlink a {\n      color: inherit !important;\n      text-decoration: none !important;\n    }\n\n    span.MsoHyperlink {\n      mso-style-priority: 99;\n      color: inherit;\n    }\n\n    span.MsoHyperlinkFollowed {\n      mso-style-priority: 99;\n      color: inherit;\n    }\n\n    .em_header {\n      font-family: "Lato", Arial, sans-serif;\n      font-size: 12px;\n      line-height: 18px;\n      color: #888888;\n      text-decoration: none;\n    }\n\n    .em_header a {\n      color: #888888;\n      text-decoration: underline;\n    }\n\n    .em_text1 {\n      font-family: Lato, Arial, sans-serif;\n      font-size: 32px;\n      line-height: 37px;\n      color: #000;\n      text-decoration: none;\n      font-weight: bold;\n    }\n\n    .em_text2 {\n      font-family: Lato, Arial, sans-serif;\n      font-size: 19px;\n      line-height: 24px;\n      color: #333;\n      text-decoration: none;\n    }\n\n    .em_price_rules_text {\n      font-family: Lato, Arial, sans-serif;\n      font-size: 17px;\n      line-height: 24px;\n      color: ;\n      text-decoration: none;\n    }\n\n    .em_footer {\n      font-family: Arial, sans-serif;\n      font-size: 16px;\n      line-height: 24px;\n      color: #aaa;\n      text-decoration: none;\n    }\n\n    .em_footer a {\n      color: #777777;\n      text-decoration: underline;\n      white-space: nowrap;\n    }\n\n    .em_btn {\n      font-family: Lato, Arial, sans-serif;\n      font-size: 27px;\n      background-color: #222222;\n      text-decoration: none;\n      letter-spacing: 1px;\n    }\n\n    .em_btn a {\n      color: white;\n      text-decoration: none;\n    }\n\n    /*Stylesheet for the devices width between 481px to 599px*/\n    @media only screen and (min-width:481px) and (max-width:599px) {\n      .em_main_table {\n        width: 100% !important;\n      }\n\n      .em_wrapper {\n        width: 100% !important;\n      }\n\n      .em_side {\n        width: 10px !important;\n      }\n\n      .em_hide {\n        display: none !important;\n      }\n\n      .em_full_img {\n        width: 100% !important;\n        height: auto !important;\n      }\n\n      .em_center {\n        text-align: center !important;\n      }\n\n      .em_height {\n        height: 25px !important;\n      }\n\n      .em_gap_bottom {\n        padding-bottom: 20px !important;\n      }\n\n      .em_text1 {\n        font-size: 28px !important;\n        line-height: 30px !important;\n      }\n    }\n\n    /*Stylesheet for the devices width between 0px to 480px*/\n    @media only screen and (max-width:480px) {\n      .em_main_table {\n        width: 100% !important;\n      }\n\n      .em_wrapper {\n        width: 100% !important;\n      }\n\n      .em_side {\n        width: 10px !important;\n      }\n\n      .em_hide {\n        display: none !important;\n      }\n\n      .em_hide1 {\n        display: none !important;\n      }\n\n      .em_full_img {\n        width: 100% !important;\n        height: auto !important;\n      }\n\n      .em_center {\n        text-align: center !important;\n      }\n\n      .em_height {\n        height: 25px !important;\n      }\n\n      .em_gap_bottom {\n        padding-bottom: 20px !important;\n      }\n\n      .em_text1 {\n        font-size: 28px !important;\n        line-height: 30px !important;\n      }\n\n      .em_width {\n        width: 34px !important;\n        height: auto !important;\n      }\n\n      .em_footer {\n        font-size: 15px !important;\n        line-height: 23px !important;\n      }\n\n      .em_btn a {\n        text-decoration: none !important;\n      }\n    }\n  '
     }}
   />
   {/*[if gte mso 9]>
@@ -404,7 +411,13 @@ function Templates({shop, shopid}){
                   >
                     <tbody>
                       <tr>
-       
+                        <td
+                          width={25}
+                          style={{ width: "25px" }}
+                          className="em_side"
+                        >
+                          &nbsp;
+                        </td>
                         <td align="center" valign="top">
                           <table
                             width="100%"
@@ -413,29 +426,36 @@ function Templates({shop, shopid}){
                             cellPadding={0}
                           >
                             <tbody>
-                              
+                              <tr>
+                                <td
+                                  height={13}
+                                  style={{ fontSize: "1px", lineHeight: "1px" }}
+                                >
+                                  &nbsp;
+                                </td>
+                              </tr>
                               <tr>
                                 <td
                                   align="center"
                                   valign="middle"
                                   className="em_header"
                                   style={{
-                                    fontFamily: '"Lato", Arial, sans-serif',
+                                    fontFamily: "Lato, Arial, sans-serif",
                                     fontSize: "12px",
                                     lineHeight: "18px",
-                                    color: LinkFieldTextColor,
+                                    color: "#888888",
                                     textDecoration: "none"
                                   }}
                                 >
-                                  {subjectFieldValue.replaceAll("{{product.title}}",previewproduct.node.title).replaceAll("{{shop.name}}",shopdata.name)}
-                        
+                  
+                                  {strreplacefun(subjectFieldValue)}
                                   <br className="em_hide1" />
                                   <a
-                                    href={previewproduct.node.onlineStorePreviewUrl}
+                                    href={previewproduct.onlineStorePreviewUrl}
                                     target="_blank"
                                     style={{
                                       whiteSpace: "nowrap",
-                                      color: LinkFieldTextColor,
+                                      color: "#888888",
                                       textDecoration: "underline"
                                     }}
                                   >
@@ -443,14 +463,36 @@ function Templates({shop, shopid}){
                                   </a>
                                 </td>
                               </tr>
-                           
+                              <tr>
+                                <td
+                                  height={13}
+                                  style={{ fontSize: "1px", lineHeight: "1px" }}
+                                >
+                                  &nbsp;
+                                </td>
+                              </tr>
                             </tbody>
                           </table>
                         </td>
-                       
+                        <td
+                          width={25}
+                          style={{ width: "25px" }}
+                          className="em_side"
+                        >
+                          &nbsp;
+                        </td>
                       </tr>
                     </tbody>
                   </table>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  height={1}
+                  style={{ fontSize: "1px", lineHeight: "1px" }}
+                  bgcolor="#dddddd"
+                >
+                  &nbsp;
                 </td>
               </tr>
               <tr>
@@ -464,7 +506,13 @@ function Templates({shop, shopid}){
                   >
                     <tbody>
                       <tr>
-                       
+                        <td
+                          width={25}
+                          style={{ width: "25px" }}
+                          className="em_side"
+                        >
+                          &nbsp;
+                        </td>
                         <td align="center" valign="top">
                           <table
                             width="100%"
@@ -473,19 +521,27 @@ function Templates({shop, shopid}){
                             cellPadding={0}
                           >
                             <tbody>
-                            
+                              <tr>
+                                <td
+                                  height={30}
+                                  className="em_height"
+                                  style={{ height: "30px" }}
+                                >
+                                  &nbsp;
+                                </td>
+                              </tr>
                               <tr>
                                 <td align="center" valign="top">
                                   <a
-                                    href={previewproduct.node.onlineStorePreviewUrl}
+                                    href={previewproduct.onlineStorePreviewUrl}
                                     target="_blank"
                                     style={{ textDecoration: "none" }}
                                   >
                                     <img
-                                      src={file}
-                                      alt={shop}
-                                      width="100"
-                                      height="100"
+                                      src=""
+                                      alt=""
+                                      width=""
+                                      height=""
                                       style={{
                                         display: "block",
                                         border: "none",
@@ -495,14 +551,22 @@ function Templates({shop, shopid}){
                                   </a>
                                 </td>
                               </tr>
-                            
+                              <tr>
+                                <td
+                                  height={52}
+                                  className="em_height"
+                                  style={{ height: "52px" }}
+                                >
+                                  &nbsp;
+                                </td>
+                              </tr>
                               <tr>
                                 <td
                                   align="center"
                                   valign="middle"
                                   className="em_text1"
                                   style={{
-                                    fontFamily: '"Lato", Arial, sans-serif',
+                                    fontFamily: "Lato, Arial, sans-serif",
                                     fontSize: "32px",
                                     lineHeight: "37px",
                                     color: HeadingFieldTextColor,
@@ -510,22 +574,60 @@ function Templates({shop, shopid}){
                                     fontWeight: "bold"
                                   }}
                                 >
-                                   {HeadingFieldValue.replaceAll("{{product.title}}",previewproduct.node.title).replaceAll("{{variant.title}}",previewproduct.node.variants.edges[0].node.title).replaceAll("{{shop.name}}",shopdata.name)}
-                        
+                       
+                                  {strreplacefun(HeadingFieldValue)}
+                     
                                 </td>
                               </tr>
-                            
+                              <tr>
+                                <td
+                                  height={28}
+                                  style={{ height: "28px" }}
+                                  className="em_height"
+                                >
+                                  &nbsp;
+                                </td>
+                              </tr>
                             </tbody>
                           </table>
                         </td>
-                       
+                        <td
+                          width={25}
+                          style={{ width: "25px" }}
+                          className="em_side"
+                        >
+                          &nbsp;
+                        </td>
                       </tr>
                     </tbody>
                   </table>
                 </td>
               </tr>
               <tr>
-                <td align="center" valign="top"></td>
+                <td align="center" valign="top">
+                  <a
+                    href={previewproduct.onlineStorePreviewUrl}
+                    target="_blank"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <img
+                      src={previewproduct.featuredImage ? previewproduct.featuredImage.url : ''}
+                      width={600}
+                      className="em_full_img"
+                      alt={previewproduct.title}
+                      style={{
+                        fontFamily: "Arial, sans-serif",
+                        fontSize: "20px",
+                        fontWeight: "bold",
+                        lineHeight: "400px",
+                        color: "#000000",
+                        textAlign: "center",
+                        display: "block",
+                        border: "none"
+                      }}
+                    />
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td align="center" valign="top">
@@ -568,21 +670,22 @@ function Templates({shop, shopid}){
                                   valign="middle"
                                   className="em_text2"
                                   style={{
-                                    fontFamily: '"Lato", Arial, sans-serif',
+                                    fontFamily: "Lato, Arial, sans-serif",
                                     fontSize: "19px",
                                     lineHeight: "24px",
                                     color: BodyFieldTextColor,
                                     textDecoration: "none"
                                   }}
                                 >
-                                {ContentFieldText.replaceAll("{{product.title}}",previewproduct.node.title).replaceAll("{{variant.title}}",previewproduct.node.variants.edges[0].node.title)}
-                        
+              
+                                  {strreplacefun(ContentFieldText)}
+                
                                 </td>
                               </tr>
                               <tr>
                                 <td
                                   height={45}
-                                  style={{ fontSize: 1, lineHeight: 1 }}
+                                  style={{ fontSize: "1px", lineHeight: "1px" }}
                                   className="em_height"
                                 >
                                   &nbsp;
@@ -648,33 +751,34 @@ function Templates({shop, shopid}){
                                                           className="em_btn"
                                                           style={{
                                                             fontFamily:
-                                                              '"Lato", Arial, sans-serif',
-                                                            fontSize: 27,
-                                                            backgroundColor:BuyButtonFieldBackgroundColor,
+                                                              "Lato, Arial, sans-serif",
+                                                            fontSize: "27px",
+                                                            backgroundColor: BuyButtonFieldBackgroundColor,
                                                             textDecoration:
                                                               "none",
-                                                            letterSpacing: 1
+                                                            letterSpacing: "1px"
                                                           }}
                                                         >
                                                           <a
-                                                            href={previewproduct.node.onlineStorePreviewUrl}
+                                                            href={previewproduct.onlineStorePreviewUrl}
                                                             target="_blank"
                                                             className="em_btn"
                                                             style={{
                                                               fontFamily:
-                                                                '"Lato", Arial, sans-serif',
-                                                              fontSize: 27,
-                                                              color: "white",
+                                                                "Lato, Arial, sans-serif",
+                                                              fontSize: "27px",
+                                                              color: BuyButtonFieldTextColor,
                                                               textDecoration:
                                                                 "none",
-                                                              letterSpacing: 1,
-                                                              padding: 12,
+                                                              letterSpacing: "1px",
+                                                              padding: "12px",
                                                               display:
                                                                 "inline-block",
                                                               width: "100%"
                                                             }}
                                                           >
-                                                          {BuyButtonFieldText}
+                                                            {strreplacefun(BuyButtonFieldText)}
+                          
                                                           </a>
                                                         </td>
                                                       </tr>
@@ -711,7 +815,7 @@ function Templates({shop, shopid}){
                               <tr>
                                 <td
                                   height={60}
-                                  style={{ height: 60 }}
+                                  style={{ height: "60px" }}
                                   className="em_height"
                                 >
                                   &nbsp;
@@ -722,7 +826,7 @@ function Templates({shop, shopid}){
                         </td>
                         <td
                           width={25}
-                          style={{ width: 25 }}
+                          style={{ width: "25px" }}
                           className="em_side"
                         >
                           &nbsp;
@@ -744,7 +848,7 @@ function Templates({shop, shopid}){
                       <tr>
                         <td
                           width={25}
-                          style={{ width: 25 }}
+                          style={{ width: "25px" }}
                           className="em_side"
                         >
                           &nbsp;
@@ -761,7 +865,7 @@ function Templates({shop, shopid}){
                                 <td
                                   height={26}
                                   className="em_height"
-                                  style={{ height: 26 }}
+                                  style={{ height: "26px" }}
                                 >
                                   &nbsp;
                                 </td>
@@ -775,21 +879,24 @@ function Templates({shop, shopid}){
                                     fontFamily: "Arial, sans-serif",
                                     fontSize: "16px",
                                     lineHeight: "24px",
-                                    color: FooterContentFieldText,
+                                    color: FooterFieldTextColor,
                                     textDecoration: "none"
                                   }}
+
+                                  
                                 >
-                                  {FooterContentFieldText.replaceAll("{{variant.url}}",previewproduct.node.onlineStorePreviewUrl).replaceAll("{{link_color}}",FooterLinkFieldTextColor).replaceAll("{{shop.name}}",shopdata.name).replaceAll("{{shop.address1}}",shopdata.billingAddress.address1).replaceAll("{{shop.city}}",shopdata.billingAddress.city).replaceAll("{{shop.zip}}",shopdata.billingAddress.zip).replaceAll("{{shop.country}}",shopdata.billingAddress.country)}
-                        
-                                
-                               
+
+                                  {strreplacefun(FooterContentFieldText)}
+                 
+                                  <br />
+                                  <br />
                                 </td>
                               </tr>
                               <tr>
                                 <td
                                   height={24}
                                   className="em_height"
-                                  style={{ height: 24 }}
+                                  style={{ height: "24px" }}
                                 >
                                   &nbsp;
                                 </td>
@@ -798,7 +905,7 @@ function Templates({shop, shopid}){
                                 <td
                                   height={28}
                                   className="em_height"
-                                  style={{ height: 28 }}
+                                  style={{ height: "28px" }}
                                 >
                                   &nbsp;
                                 </td>
@@ -808,7 +915,7 @@ function Templates({shop, shopid}){
                         </td>
                         <td
                           width={25}
-                          style={{ width: 25 }}
+                          style={{ width: "25px" }}
                           className="em_side"
                         >
                           &nbsp;
@@ -833,14 +940,26 @@ function Templates({shop, shopid}){
   </div>
 </>
 
+</>
+
   );
                                   }
                                 }
 
 
-                                const handlesendtestpushnoti = () =>{
-                                  console.log("pushhhhhhhhhhhhhhhhhhhhhhhhhh");
-                                  }
+const handlesendtestpushnoti = async () =>{
+  const rawResponse = await fetch('https://app.mobivogue.com/react-php-final/sendtestemail.php?shop='+shop, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+    const content = await rawResponse.json();
+
+    setcontent(content.Message);
+
+    toggleToastActive();
+}
 
 
     return (
@@ -877,7 +996,7 @@ function Templates({shop, shopid}){
                    
                
                       {/* <div style={{ width: 114, height: 114 }}> */}
-                        <DropZone
+                        {/* <DropZone
                         label="Logo"
                           allowMultiple={false}
                           onDrop={handleDropZoneDrop}
@@ -887,7 +1006,7 @@ function Templates({shop, shopid}){
                         >
                           {uploadedFile}
                           {fileUpload}
-                        </DropZone>
+                        </DropZone> */}
 
                         {errorMessage}
 
