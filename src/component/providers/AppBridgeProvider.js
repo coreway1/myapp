@@ -44,12 +44,12 @@ export function AppBridgeProvider({ children }) {
 
     return {
       host,
-      apiKey: "97a4ed44e77978076371beb6016a6a36",
+      apiKey: "",
       forceRedirect: true,
     };
   });
 
-  const SHOPIFY_API_KEY = "97a4ed44e77978076371beb6016a6a36";
+  const SHOPIFY_API_KEY = "";
 
   if (!SHOPIFY_API_KEY || !appBridgeConfig.host) {
     const bannerProps = !SHOPIFY_API_KEY
