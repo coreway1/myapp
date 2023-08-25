@@ -38,6 +38,11 @@ function App() {
   
   useEffect(() => {
     getshopid(new URLSearchParams(window.location.search).get('shop'));   
+
+    console.log("path");
+    console.log(window.location.pathname);
+    console.log("path");
+
   }, []); 
 
 
@@ -46,18 +51,20 @@ function App() {
 
   return (
     <PolarisProvider linkComponent={Link}>
-    <BrowserRouter>
+ <BrowserRouter>
       <AppBridgeProvider>
+
   
       <Routes>
 <Route exact path={`/`} element={< Dashboard shop={new URLSearchParams(window.location.search).get('shop')} shopid={shopid} installeddate={installeddate} />}></Route>
-                <Route exact path={`/notifications`} element={< Notifications shop={new URLSearchParams(window.location.search).get('shop')} shopid={shopid} />}></Route>
-                <Route path={`/notifications/:id`} element={<Notificationsview shop={new URLSearchParams(window.location.search).get('shop')} shopid={shopid} />} />
-                <Route exact path={`/webpush-notifications`} element={< WebpushNotifications shop={new URLSearchParams(window.location.search).get('shop')} shopid={shopid} />}></Route>
-                <Route exact path={`/templates`} element={< Templates shop={new URLSearchParams(window.location.search).get('shop')} shopid={shopid} />}></Route>
-                <Route exact path={`/webpush-template`} element={< WebpushTemplate shop={new URLSearchParams(window.location.search).get('shop')} shopid={shopid} />}></Route>
-                <Route exact path={`/settings`} element={< Settings shop={new URLSearchParams(window.location.search).get('shop')} shopid={shopid} />}></Route>
-                <Route exact path={`/plans`} element={< Plans shop={new URLSearchParams(window.location.search).get('shop')} shopid={shopid} />}></Route>
+<Route exact path={`${process.env.PUBLIC_URL}`} element={< Dashboard shop={new URLSearchParams(window.location.search).get('shop')} shopid={shopid} installeddate={installeddate} />}></Route>
+                <Route exact path={`${process.env.PUBLIC_URL}/notifications`} element={< Notifications shop={new URLSearchParams(window.location.search).get('shop')} shopid={shopid} />}></Route>
+                <Route path={`${process.env.PUBLIC_URL}/notifications/:id`} element={<Notificationsview shop={new URLSearchParams(window.location.search).get('shop')} shopid={shopid} />} />
+                <Route exact path={`${process.env.PUBLIC_URL}/webpush-notifications`} element={< WebpushNotifications shop={new URLSearchParams(window.location.search).get('shop')} shopid={shopid} />}></Route>
+                <Route exact path={`${process.env.PUBLIC_URL}/templates`} element={< Templates shop={new URLSearchParams(window.location.search).get('shop')} shopid={shopid} />}></Route>
+                <Route exact path={`${process.env.PUBLIC_URL}/webpush-template`} element={< WebpushTemplate shop={new URLSearchParams(window.location.search).get('shop')} shopid={shopid} />}></Route>
+                <Route exact path={`${process.env.PUBLIC_URL}/settings`} element={< Settings shop={new URLSearchParams(window.location.search).get('shop')} shopid={shopid} />}></Route>
+                <Route exact path={`${process.env.PUBLIC_URL}/plans`} element={< Plans shop={new URLSearchParams(window.location.search).get('shop')} shopid={shopid} />}></Route>
       </Routes>
   
       </AppBridgeProvider>

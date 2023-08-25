@@ -283,7 +283,7 @@ function Templates({shop, shopid}){
 
   const getpreviewproduct = async (shop) => {
 
-    const rawResponse = await fetch('https://app.mobivogue.com/react-php-final/getpreviewproduct.php?shop='+shop, {
+    const rawResponse = await fetch('https://app.mobivogue.com/app/getpreviewproduct.php?shop='+shop, {
       method: 'GET',
       headers: {
         'Accept': 'application/json'
@@ -296,7 +296,7 @@ function Templates({shop, shopid}){
 
   const getshopdata = async (shop) => {
 
-    const rawResponse = await fetch('https://app.mobivogue.com/react-php-final/getshopdata.php?shop='+shop, {
+    const rawResponse = await fetch('https://app.mobivogue.com/app/getshopdata.php?shop='+shop, {
       method: 'GET',
       headers: {
         'Accept': 'application/json'
@@ -948,7 +948,7 @@ function Templates({shop, shopid}){
 
 
 const handlesendtestpushnoti = async () =>{
-  const rawResponse = await fetch('https://app.mobivogue.com/react-php-final/sendtestemail.php?shop='+shop, {
+  const rawResponse = await fetch('https://app.mobivogue.com/app/sendtestemail.php?shop='+shop, {
       method: 'GET',
       headers: {
         'Accept': 'application/json'

@@ -276,7 +276,7 @@ function WebpushTemplate({shop, shopid}){
   };
 
   const getpreviewproduct = async (shop) => {
-    const rawResponse = await fetch('https://app.mobivogue.com/react-php-final/getpreviewproduct.php?shop='+shop, {
+    const rawResponse = await fetch('https://app.mobivogue.com/app/getpreviewproduct.php?shop='+shop, {
       method: 'GET',
       headers: {
         'Accept': 'application/json'
@@ -291,7 +291,7 @@ function WebpushTemplate({shop, shopid}){
   };
 
   const getshopdata = async (shop) => {
-    const rawResponse = await fetch('https://app.mobivogue.com/react-php-final/getshopdata.php?shop='+shop, {
+    const rawResponse = await fetch('https://app.mobivogue.com/app/getshopdata.php?shop='+shop, {
       method: 'GET',
       headers: {
         'Accept': 'application/json'
